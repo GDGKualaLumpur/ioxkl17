@@ -1,0 +1,103 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="Polymer Starter Kit">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <link rel="icon" href="/images/favicon.png">
+    <meta name="theme-color" content="#4285f4">
+
+    <title>I/O Extended 2017 Kuala Lumpur</title>
+    <meta name="description" content="Next ‘17 will be the largest event in Google’s history. Google Cloud engineers, customers and partners will gather for inspiration and hands on experiences with tools, technologies and services born in the Cloud, including the latest developments from Google Cloud Platform, G Suite, Maps and Devices.">
+    <meta name="author" content="Henry Lim, GDG Kuala Lumpur">
+    <link rel="canonical" href="https://cloudnextkl2017.firebaseapp.com/">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Cloud Next '17 Extended Kuala Lumpur">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="JomCode Kuala Lumpur 2017">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@GDGKL">
+    <meta name="twitter:title" content="Cloud Next '17 Extended Kuala Lumpur">
+    <meta name="twitter:description" content="Next ‘17 will be the largest event in Google’s history. Google Cloud engineers, customers and partners will gather for inspiration and hands on experiences with tools, technologies and services born in the Cloud, including the latest developments from Google Cloud Platform, G Suite, Maps and Devices.">
+    <meta name="twitter:image:src" content="https://cloudnextkl2017.firebaseapp.com/images/social/social.png">
+    <meta property="og:title" content="Cloud Next '17 Extended Kuala Lumpur">
+    <meta property="og:image" content="https://cloudnextkl2017.firebaseapp.com/images/social/social.png">
+    <meta property="og:site_name" content="Next ‘17 will be the largest event in Google’s history. Google Cloud engineers, customers and partners will gather for inspiration and hands on experiences with tools, technologies and services born in the Cloud, including the latest developments from Google Cloud Platform, G Suite, Maps and Devices.">
+    <meta property="og:description" content="Next ‘17 will be the largest event in Google’s history. Google Cloud engineers, customers and partners will gather for inspiration and hands on experiences with tools, technologies and services born in the Cloud, including the latest developments from Google Cloud Platform, G Suite, Maps and Devices.">
+
+    <script>
+      // Setup Polymer options
+      window.Polymer = {
+        dom: 'shadow',
+        lazyRegister: true,
+      };
+
+      // Load webcomponentsjs polyfill if browser does not support native
+      // Web Components
+      (function() {
+        'use strict';
+
+        var onload = function() {
+          // For native Imports, manually fire WebComponentsReady so user code
+          // can use the same code path for native and polyfill'd imports.
+          if (!window.HTMLImports) {
+            document.dispatchEvent(
+              new CustomEvent('WebComponentsReady', {bubbles: true})
+            );
+          }
+        };
+
+        var webComponentsSupported = (
+          'registerElement' in document
+          && 'import' in document.createElement('link')
+          && 'content' in document.createElement('template')
+        );
+
+        if (!webComponentsSupported) {
+          var script = document.createElement('script');
+          script.async = true;
+          script.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+          script.onload = onload;
+          document.head.appendChild(script);
+        } else {
+          onload();
+        }
+      })();
+
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-76843776-2', 'auto');
+      ga('send', 'pageview');
+      
+    </script>
+
+    <link rel="import" href="/src/gdg-app.html">
+
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Roboto', 'Noto', sans-serif;
+        line-height: 1.5;
+        min-height: 100vh;
+        background-color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <gdg-app></gdg-app>
+  </body>
+</html>

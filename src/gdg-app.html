@@ -1,0 +1,533 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="gdg-icons.html">
+<link rel="import" href="shared-styles.html">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
+
+<dom-module id="gdg-app">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+      app-header {
+        height: 482px;
+        color: #fff;
+      }
+      app-header paper-icon-button {
+        --paper-icon-button-ink-color: var(--text-primary-color);
+      }
+      .content {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        min-height: calc(100vh - 64px);
+      }
+      iron-pages{
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-flex: 1;
+            -ms-flex: 1;
+                flex: 1;      
+      }
+      footer {
+        margin-top: 64px;
+        height: 64px;
+        line-height: 64px;
+        background-color: var(--footer-color);
+        font-size: 14px;
+        color: var(--secondary-text-color);
+      }    
+      footer span{
+        font-size: 0.97em;
+        font-weight: 300;
+        opacity: 0.85;
+        margin: 0 36px;
+      }
+      
+      footer a{
+        text-decoration: none;
+        color: var(--primary-text-color);
+      }
+      footer a:hover{
+        font-weight: 400;
+      }
+      .header-flex{
+        height: 354px;
+        display: flex;
+        align-content: flex-start;
+        justify-content: center;
+      }
+
+      .header-flex svg{
+        /*animation: 500ms 300ms fade ease-in-out forwards;*/
+        opacity: 1;
+        margin: -60px 18px 0 18px;
+      }
+      .header-flex .hover-container{
+        width: 100%;
+        height: 250px;
+        position: absolute;
+        z-index: 2;
+      }
+      .header-flex .svg-container{
+        width: 100%;
+        background: white;
+        align-items: flex-start;
+        display: flex;    
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        opacity: 0;
+      }
+      .header-flex .logo-container{
+        position: absolute;
+        left: 0;
+        right: 0;
+        text-align: center;
+        top: 120px;
+        bottom: 0; 
+        opacity: 1;
+      }
+      .header-flex img{
+        max-width: 860px;
+        width: 80%;
+        height: auto;
+      }
+      app-toolbar img{
+        height: 22px;
+      }
+      app-toolbar paper-button{
+        display: none;
+      }
+      .header-nav{
+        width: 100%;
+        background: var(--text-primary-color);
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+                justify-content: space-between;
+        position: inherit;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: var(--divider-color);
+      }
+      paper-tabs{
+        margin: 0 24px;
+        width: 240px;
+        background: var(--text-primary-color);
+        color: var(--primary-text-color);
+        height: 64px;
+        --paper-tabs-selection-bar-color: var(--default-primary-color);
+      }
+      paper-tab a{
+        padding: 0 8px;
+        font-weight: 400;
+        font-size: 0.97em;        
+        color: var(--secondary-text-color);
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        text-decoration: none;        
+      }
+      paper-tab a:focus{
+        outline: none;
+      }
+      paper-tab.iron-selected a{
+        color: #414141;
+        font-weight: 500;
+      }
+      paper-button{
+        padding: 0.7em 1em;
+        margin: 0 24px;
+        height: 48px;
+        background: var(--default-primary-color);
+        width: 180px;
+      }
+      .paper-button-link{
+        text-decoration: none;
+        color: var(--secondary-text-color);
+      }
+      .link-mobile{
+        display: none;
+      }
+
+      .hashtag{
+        box-sizing: border-box;
+        padding: 128px 0 48px 0;
+        width: 100%;
+        background: #fff;
+        max-width: 1800px;
+        margin: 0 auto;        
+        text-align: center;
+      }
+      .hashtag svg{
+        max-width: 90%;
+      }
+
+      @media screen and (max-width: 860px){
+        .header-flex{
+          height: 222px;
+        }        
+        app-header {
+          height: 350px;
+        }
+        app-toolbar{
+          padding: 0 8px 0 16px;
+          z-index: 3;
+        }
+        app-toolbar paper-button{
+          font-size: 0.85em;
+          width: auto;
+          padding: 0.7em 0.57em;
+          margin: 0;
+          display: block;
+          font-weight: 500;
+        }
+        app-toolbar img{
+          height: 16px;
+        }
+        .header-nav paper-button{
+          display: none;
+        }
+        .header-flex .svg-container{
+          width: 90%;
+          padding-top: 32px;
+        }
+        .header-flex #svg1{
+          height: 140px;
+        }
+        .header-flex #svg2{
+          height: 170px;
+        }
+        footer{
+          text-align: center;
+        }
+        footer span{
+          margin: 0 24px;
+        }
+        .link{
+          display: none;
+        }
+        .link-mobile{
+          display: flex;
+        }
+      }
+
+      @keyframes fade{
+        0%{
+          opacity: 0
+        }
+        100%{
+          opacity: 1;
+        }
+      }
+    </style>
+
+    <iron-ajax
+      auto
+      url="../data/data.json"
+      handle-as="json"
+      last-response="{{app}}"></iron-ajax>
+
+    <app-location route="{{route}}"></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}"
+        tail="{{subroute}}"></app-route>
+
+    <app-route
+        route="{{subroute}}"
+        pattern="/:id"
+        data="{{subrouteData}}">
+    </app-route>        
+
+      <app-header-layout >
+        <app-header condenses fixed effects="blend-background" >
+          <app-toolbar>
+              <div main-title></div>     
+              <template is="dom-if" if="{{!app.general.ticket_soldout}}">
+                <a rel="noopener" target="_blank" class="paper-button-link" href="{{app.general.ticket}}" tabindex="-1"><paper-button>Get Ticket</paper-button></a>
+              </template>
+          </app-toolbar>
+          <div class="header-flex" id="headerflex">
+            <div class="hover-container" on-mouseover="showLogo" on-mouseout="hideLogo"></div>
+            <div class="logo-container">
+              <img src="../images/background/cover.png">
+            </div>
+            <div class="svg-container">
+              <svg id="svg1" width="200px" height="200px" viewBox="0 0 282 282" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="pointer-events: none">
+                  <g class="slash-extended-3" fill="#1CE8B5">
+                    <g class="primary" data-svg-origin="7 141">
+                      <rect id="slash" x="-3.8097185e-13" y="-4.26325641e-13" width="10" height="282" style="transform: translateX(141px)"></rect>
+                    </g>
+                  </g>
+                </svg>
+                <svg id="svg2" width="250px" height="250px" viewBox="0 0 390 390" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="pointer-events: none">
+                  <g class="slash-registration" fill="#FDD330">
+                    <g class="secondary" transform="translate(45.000000, 3.000000)" >
+                      <g id="slash-parent-15" ><rect id="slash15" x="91.5912801" y="11.1897087" width="4.30851064" height="90"></rect></g>
+                      <g id="slash-parent-14" ><rect id="slash14" x="43.9010478" y="43.0553032" width="4.30851064" height="90"></rect></g>
+                      <g id="slash-parent-13" ><rect id="slash13" x="12.0354534" y="90.7455354" width="4.30851064" height="90"></rect></g>
+                      <g id="slash-parent-12" ><rect id="slash12" x="0.845744681" y="147" width="4.30851064" height="90"></rect></g>
+                      <g id="slash-parent-11" ><rect id="slash11" x="12.0354534" y="203.254465" width="4.30851064" height="90"></rect></g>
+                      <g id="slash-parent-10" ><rect id="slash10" x="43.9010478" y="250.944697" width="4.30851064" height="90"></rect></g>
+                      <g id="slash-parent-9" ><rect id="slash9" x="91.5912801" y="282.810291" width="4.30851064" height="90"></rect></g>
+                      <g id="slash-parent-8" ><rect id="slash8" x="147.845745" y="294" width="4.30851064" height="90"></rect></g>
+                      <g id="slash-parent-7" ><rect id="slash7" x="204.100209" y="282.810291" width="4.30851064" height="90"></rect></g>
+                      <g id="slash-parent-6" ><rect id="slash6" x="251.790442" y="250.944697" width="4.30851064" height="90"></rect></g>
+                      <g id="slash-parent-5" ><rect id="slash5" x="283.656036" y="203.254465" width="4.30851064" height="90"></rect></g>
+                      <g id="slash-parent-4" ><rect id="slash4" x="294.845745" y="147" width="4.30851064" height="90"></rect></g>
+                      <g id="slash-parent-3" ><rect id="slash3" x="283.656036" y="90.7455354" width="4.30851064" height="90"></rect></g>
+                      <g id="slash-parent-2" ><rect id="slash2" x="251.790442" y="43.0553032" width="4.30851064" height="90"></rect></g>
+                      <g id="slash-parent-1" ><rect id="slash1" x="204.100209" y="11.1897087" width="4.30851064" height="90"></rect></g>
+                      <g id="slash-parent-0" ><rect id="slash0" x="147.845745" y="1.3500312e-13" width="4.30851064" height="90"></rect></g>
+                    </g>
+                  </g>
+                </svg>
+            </div>
+          </div>
+          <div class="header-nav">
+
+            <paper-tabs class="link" noink="false" selected="[[page]]" attr-for-selected="name" > 
+              <template is="dom-repeat" items="[[app.navigation]]">
+                <paper-tab link name="{{item.permalink}}">
+                  <a rel="noopener" href="/{{item.permalink}}" class="link" tabindex="-1">{{item.title}}</a>
+                </paper-tab>                                 
+              </template>
+            </paper-tabs>
+
+            <paper-tabs class="link-mobile" noink="false" selected="[[page]]" attr-for-selected="name" > 
+              <template is="dom-repeat" items="[[app.navigation]]">
+                <paper-tab link name="{{item.permalink}}">
+                  <a rel="noopener" href="/{{item.permalink}}" class="link-mobile" tabindex="-1">{{item.shortTitle}}</a>
+                </paper-tab>                                 
+              </template>
+            </paper-tabs>   
+
+            <template is="dom-if" if="{{!app.general.ticket_soldout}}">
+              <a target="_blank" rel="noopener" class="paper-button-link" href="{{app.general.ticket}}" tabindex="-1"><paper-button>Get Ticket</paper-button></a>
+            </template>
+            <template is="dom-if" if="{{app.general.ticket_soldout}}">
+              <a target="_blank" rel="noopener" class="paper-button-link" href="{{app.general.ticket}}" tabindex="-1"><paper-button style="background: #D32F2F; color: #fff">Sold Out</paper-button></a>
+            </template>
+          </div>      
+        </app-header>
+
+        <div class="content">
+          <iron-pages
+              selected="[[page]]"
+              attr-for-selected="name"
+              fallback-selection="home"
+              role="main">
+            <gdg-home name="home" app="{{app}}"></gdg-home>
+            <!--<gdg-agenda name="agenda" app="{{app.agenda}}"></gdg-agenda>-->
+            <!--<gdg-speakers name="speakers" route="{{subrouteData}}" detail="{{subroute}}" app="{{app}}"></gdg-speakers>-->
+            <gdg-communityguidelines name="communityguidelines"></gdg-communityguidelines>
+          </iron-pages>
+          <div class="hashtag">
+            <a href="https://twitter.com/hashtag/io17" rel="noopener" target="_blank" ><svg width="277" height="95" viewBox="0 0 277 95" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path fill="#5471F9" d="M195.129 90.674h6.85V2.514h-6.85zm-111.083 0h6.85V24.919h-6.85zM81.709 8.359c0-3.238 2.619-5.845 5.871-5.845 3.253 0 5.872 2.607 5.872 5.845 0 3.237-2.62 5.845-5.872 5.845s-5.871-2.608-5.871-5.845M220.1 9.81l-.014-7.191 40.773-.082.014 7.192z"></path><path fill="#40E7B8" d="M232.99 92.868l-6.122-3.06 43.927-87.052 6.122 3.06z"></path><path fill="#5471F9" d="M147.112 38.276L143.7 21.693l2.409-.32 3.39 16.581z"></path><path stroke="#5471F9" stroke-width=".5" d="M147.112 38.276L143.7 21.693l2.409-.32 3.39 16.581z"></path><path fill="#5471F9" d="M154.681 42.097l3.674-16.528 2.33.686-3.691 16.517z"></path><path stroke="#5471F9" stroke-width=".5" d="M154.681 42.097l3.674-16.528 2.33.686-3.691 16.517z"></path><path fill="#5471F9" d="M160.062 48.656l10.075-13.638 1.852 1.565-10.086 13.62z"></path><path stroke="#5471F9" stroke-width=".5" d="M160.062 48.656l10.075-13.638 1.852 1.565-10.086 13.62z"></path><path fill="#5471F9" d="M162.295 56.817l14.79-8.357 1.05 2.182-14.794 8.336z"></path><path stroke="#5471F9" stroke-width=".5" d="M162.295 56.817l14.79-8.357 1.05 2.182-14.794 8.336z"></path><path fill="#5471F9" d="M161.014 65.196l16.922-1.697.074 2.418-16.916 1.677z"></path><path stroke="#5471F9" stroke-width=".5" d="M161.014 65.196l16.922-1.697.074 2.418-16.916 1.677z"></path><path fill="#5471F9" d="M156.424 72.312l16.152 5.301-.92 2.238-16.138-5.317z"></path><path stroke="#5471F9" stroke-width=".5" d="M156.424 72.312l16.152 5.301-.92 2.238-16.138-5.317z"></path><path fill="#5471F9" d="M149.331 76.977l12.615 11.353-1.751 1.677-12.597-11.363z"></path><path stroke="#5471F9" stroke-width=".5" d="M149.331 76.977l12.615 11.353-1.751 1.677-12.597-11.363z"></path><path fill="#5471F9" d="M140.96 78.353l6.81 15.512-2.29.811-6.788-15.513z"></path><path stroke="#5471F9" stroke-width=".5" d="M140.96 78.353l6.81 15.512-2.29.811-6.788-15.513z"></path><path fill="#5471F9" d="M132.715 76.253l-.02 16.927-2.424-.171.04-16.92z"></path><path stroke="#5471F9" stroke-width=".5" d="M132.715 76.253l-.02 16.927-2.424-.171.04-16.92z"></path><path fill="#5471F9" d="M126.049 70.982l-6.923 15.462-2.145-1.136 6.937-15.448z"></path><path stroke="#5471F9" stroke-width=".5" d="M126.049 70.982l-6.923 15.462-2.145-1.136 6.937-15.448z"></path><path fill="#5471F9" d="M122.106 63.49l-12.627 11.34-1.498-1.904 12.634-11.32z"></path><path stroke="#5471F9" stroke-width=".5" d="M122.106 63.49l-12.627 11.34-1.498-1.904 12.634-11.32z"></path><path fill="#5471F9" d="M121.573 55.072l-16.188 5.192-.582-2.348 16.187-5.17z"></path><path stroke="#5471F9" stroke-width=".5" d="M121.573 55.072l-16.188 5.192-.582-2.348 16.187-5.17z"></path><path fill="#5471F9" d="M124.507 47.11l-16.917-1.736.417-2.382 16.908 1.754z"></path><path stroke="#5471F9" stroke-width=".5" d="M124.507 47.11l-16.917-1.736.417-2.382 16.908 1.754z"></path><path fill="#5471F9" d="M130.436 41.046l-14.764-8.403 1.35-2.01 14.748 8.415z"></path><path stroke="#5471F9" stroke-width=".5" d="M130.436 41.046l-14.764-8.403 1.35-2.01 14.748 8.415z"></path><path fill="#5471F9" d="M138.337 37.891l-10.053-13.653 2.054-1.291 10.034 13.66z"></path><path stroke="#5471F9" stroke-width=".5" d="M138.337 37.891l-10.053-13.653 2.054-1.291 10.034 13.66z"></path><path fill="#40E7B8" d="M46.11 21.874l-.006-3.01 17.065-.033.005 3.01zm-22.642 0l-.006-3.01 17.064-.033.006 3.01zm-23.462 0L0 18.864l17.064-.033.006 3.01zM46.11 44.615l-.006-3.01 17.065-.034.005 3.01zm-22.642 0l-.006-3.01 17.064-.034.006 3.01zm-23.462 0L0 41.605l17.064-.034.006 3.01z"></path><path fill="#32E8B7" d="M21.897 17.472l-3.024.006L18.839.493l3.024-.005z"></path><path fill="#40E7B8" d="M21.897 40.008l-3.023.006-.035-16.984 3.024-.006zm0 23.352l-3.023.006-.035-16.984 3.024-.006z"></path><path fill="#32E8B7" d="M44.745 17.472l-3.024.006L41.687.493 44.71.488z"></path><path fill="#40E7B8" d="M44.745 40.008l-3.024.006-.034-16.984 3.023-.006zm0 23.352l-3.024.006-.034-16.984 3.023-.006z"></path></g></svg></a>       
+          </div>
+          <footer>
+            
+            <span>&copy; 2017 Based on <a rel="noopener" target="_blank" href="https://github.com/limhenry/samarium">Project Samarium</a> by <a rel="noopener" target="_blank" href="https://limhenry.xyz">Henry Lim</a></span></footer>
+        </div>
+      </app-header-layout>
+      <script>
+   
+      </script>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'gdg-app',
+
+      properties: {
+        page: {
+          type: String,
+          reflectToAttribute: true,
+          observer: '_pageChanged',
+        },
+        logoShow: {
+          type: Boolean,
+          value: false
+        }
+      },
+
+      listeners: {
+        'scrollPos': '_setScrollPos'
+      },
+
+      observers: [
+        '_routePageChanged(routeData.page)',
+      ],
+
+      _routePageChanged: function(page) {
+        this.page = page || 'home';
+      },
+
+      _pageChanged: function(page) {
+        var resolvedPageUrl = this.resolveUrl('gdg-' + page + '.html');
+        this.importHref(resolvedPageUrl, this._setScrollPos, this._showPage404, true);
+        ga('set', 'page', '/' + page);
+        ga('send', 'pageview');
+      },
+
+      _setScrollPos: function(){
+        if(window.innerWidth>860){
+          if(this.$$('app-header').scrollTarget.scrollTop>=418){
+            this.$$('app-header').scrollTarget.scroll(0,418);
+          }
+        }
+        else{
+          if(this.$$('app-header').scrollTarget.scrollTop>=286){
+            this.$$('app-header').scrollTarget.scroll(0,286);
+          }          
+        }         
+      },
+
+      _showPage404: function() {
+        this.page = 'home';
+      },
+
+      hideLogo: function(){
+        hh = this.$.headerflex;
+        pa = this.$$('.primary');
+        ll = this.$$('.logo-container');  
+        ln = this.$$('.svg-container'); 
+        TweenMax.to(ln, 0.3, {
+            opacity: 0,
+            delay: 0.35
+        })              
+        TweenMax.to(ll, 0.5, {
+            opacity: 1,
+            delay: 0.3
+        })                        
+        TweenMax.to(pa, 0.4, {
+            opacity: 0
+        })          
+        for (var ie = 0; ie < oe; ie++){
+          xs = this.$['slash' + ie]
+          TweenMax.to(xs, 0.5, {
+              scaleY: 0,
+              delay: ie / 50,
+              transformOrigin: '50% 50%',
+              ease: Elastic.easeOut.config(0.1, 0.2)
+          }); 
+        }  
+        for (var ie = 0; ie < oe; ie++){
+          TweenMax.killTweensOf('.slash' + ie) 
+        }
+      },
+      showLogo: function(){
+        hh = this.$.headerflex;
+        pa = this.$$('.primary');
+        ll = this.$$('.logo-container');  
+        ln = this.$$('.svg-container');   
+        TweenMax.to(ll, 0.3, {
+            opacity: 0,
+            delay: 0
+        })         
+        TweenMax.to(pa, 0.45, {
+            opacity: 1,
+            delay: 0.2
+        })
+        for (var ie = 0; ie < oe; ie++){
+          xs = this.$['slash' + ie]
+          TweenMax.to(xs, 0.45, {
+              scaleY: 1,
+              delay: (ie / 50) + 0.2,
+              transformOrigin: '50% 50%',
+              ease: Elastic.easeOut.config(0.1, 0.2)
+          });            
+        } 
+        TweenMax.to(ln, 0.5, {
+            opacity: 1,
+            delay: 0.3
+        })          
+      },
+
+      ready: function(){
+        hh = this.$.headerflex;
+        pa = this.$$('.primary');
+        ll = this.$$('.logo-container');  
+        ln = this.$$('.svg-container');   
+        oe = 16;
+        for (var le, ie = 0; ie < oe; ie++){
+            target = this.$['slash-parent-' + ie]
+            le = TweenMax.fromTo(target, 4, {
+                rotation: -60 + ie * (360 / oe),
+                transformOrigin: '50% 50%',
+                ease: Power3.easeInOut
+            }, {
+                rotation: 60 + ie * (360 / oe),
+                transformOrigin: '50% 50%',
+                ease: Power3.easeInOut
+            }),
+            le.repeat(-1),
+            le.repeatDelay(0.5),
+            le.yoyo(true);    
+        }
+        a = this.$$('.secondary');
+        var de = TweenMax.fromTo(a, 8, {
+            rotation: 0,
+            transformOrigin: '50% 50%',
+            ease: Power3.easeInOut
+        }, {
+            rotation: 360 - Math.round(720 * Math.random()),
+            transformOrigin: '50% 50%',
+            ease: Power3.easeInOut
+        });
+        de.repeat(-1),
+        de.yoyo(true)
+        b = this.$$('.primary')
+        var ee = TweenMax.fromTo(b, 5, {
+                rotation: 0,
+                transformOrigin: '50% 50%',
+                ease: Power3.easeOut
+            }, {
+                rotation: 720,
+                transformOrigin: '50% 50%'
+        })       
+        ee.repeat(-1),
+        ee.repeatDelay(0.5);
+      }
+    });
+  </script>
+</dom-module>

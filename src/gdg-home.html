@@ -1,0 +1,182 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/google-map/google-map.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="gdg-home">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+        margin: 0 auto;
+        width: 100%;
+        color: var(--primary-text-color);
+      }
+      .intro{
+        margin: 48px auto 64px auto;
+        text-align: center;
+        max-width: 860px;
+      }
+      .intro h3{
+        margin: 2em auto;
+        font-size: 1.3em;
+        font-weight: 500;
+      }
+      .intro p{
+        max-width: 720px;
+        margin: 12px auto;
+        white-space: pre-line;
+        font-weight: 300;
+        line-height: 1.7em;
+        font-size: 1.1em;        
+      }
+      google-map{
+        height: 400px;
+      }
+      .info{
+        width: 95%;
+        max-width: 980px;
+        margin: 56px auto;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
+      }
+      .info .container{
+        width: 50%;
+      }
+      .info .container:first-child{
+        margin-right: 16px;
+      }
+      .info iron-icon{
+        height: 22px;
+        left: 0;
+        position: absolute;
+        top: 2px;
+        vertical-align: middle;
+        width: 22px;
+        color: var(--secondary-text-color);
+      }
+      .info p{
+        margin-bottom: 16px;
+        padding-left: 34px;
+        position: relative;
+        font-size: 1.15em;
+        font-weight: 300;
+      }
+      .info h2{
+        margin: 0;
+        font-weight: 300;
+        font-size: 2.3em;
+      }
+      .info .line{
+        margin: 6px 0 36px 2px;
+        height: 2px;
+        width: 64px;
+        background: var(--default-primary-color);
+      }
+      .sponsor{
+        margin-top: 96px;
+        text-align: center;
+      }
+      .sponsor h2{
+        margin: 12px 0 8px 0;
+        font-weight: 300;
+        font-size: 1.6em;
+      }      
+      .sponsor img{
+        margin: 24px 4px;
+        width: 240px;
+        max-width: 90%;
+      }
+
+      @media screen and (max-width: 860px){
+        .intro h2{
+          font-size: 1.4em;
+          line-height: 1.5em;
+        }
+        .intro h3{
+          font-size: 1.15em;
+        }
+        .intro p{
+          font-size: 1.1em;
+        }
+        .info{
+          margin: 36px auto;
+          -webkit-box-orient: vertical;
+          -webkit-box-direction: normal;
+              -ms-flex-direction: column;
+                  flex-direction: column;
+        }
+        .info h2{
+          font-size: 2em;
+        }
+        .info p{
+          font-size: 1em;
+        }
+        .info .container{
+          margin: 12px auto;
+          width: 100%;
+        }
+        google-map{
+          height: 300px;
+        }  
+        .sponsor{
+          margin-top: 64px;
+        }
+        .sponsor h2{
+          margin: 12px 0;
+          font-size: 1.4em;
+        }    
+      }
+    </style>
+
+    <div class="intro">
+      <p>{{app.general.introduction}}</p>
+    </div>
+
+    <div class="info">
+      <div class="container">
+        <h2>When and Where</h2>
+        <div class="line"></div>
+        <p><iron-icon icon="gdg-icons:access-time"></iron-icon>{{app.general.datetime}}</p>
+        <p><iron-icon icon="gdg-icons:location-on"></iron-icon>{{app.location.address}}</p>
+      </div>
+      <div class="container">
+        <google-map zoom="{{app.location.mapCenter.zoom}}" disable-zoom latitude="{{app.location.mapCenter.latitude}}" longitude="{{app.location.mapCenter.longitude}}" fit-to-markers>
+          <google-map-marker latitude="{{app.location.pointer.latitude}}" longitude="{{app.location.pointer.longitude}}"></google-map-marker>
+        </google-map>
+      </div>
+    </div>
+
+    <div class="sponsor">
+      <template is="dom-repeat" items="{{app.partners}}">
+        <h2>{{item.title}}</h2>
+        <div class="logo">
+          <template is="dom-repeat" items="{{item.partner}}">
+            <a rel="noopener" target="_blank" href="{{item.url}}">
+              <img src="{{item.logoUrl}}" style$="width: {{item.logoWidth}}px">
+            </a>
+          </template>
+        </div>
+      </template>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'gdg-home',
+    });
+  </script>
+</dom-module>

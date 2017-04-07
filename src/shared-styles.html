@@ -1,0 +1,70 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="shared-styles">
+  <template>
+    <style>
+      :root {
+        --dark-primary-color:       #0097A7;
+        --default-primary-color:    #1CE8B5;
+        --light-primary-color:      #B2EBF2;
+        --text-primary-color:       #FFFFFF;
+        --accent-color:             #FFC107;
+        --primary-background-color: #B2EBF2;
+        --primary-text-color:       #212121;
+        --secondary-text-color:     #424242;
+        --disabled-text-color:      #BDBDBD;
+        --divider-color:            #BDBDBD;
+
+        --footer-color:             #FFD500;
+
+        --app-header-background-image-color: #fff;
+      }
+      .container{
+        margin: 12px 32px;
+        max-width: 960px;
+      }  
+      .container h2{
+        margin: 36px 0 24px 8px;
+        color: var(--secondary-text-color);
+        font-weight: 400;
+        font-size: 2em;
+      }
+      .container .item{
+        padding: 16px 0;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+      }   
+      .container .item .detail{
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;        
+      }
+      @media screen and (max-width: 860px){
+        .container{
+          margin: 0 16px;
+        }
+        .container h2{
+          font-size: 1.6em;
+        }        
+      }            
+    </style>
+  </template>
+</dom-module>

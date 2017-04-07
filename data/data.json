@@ -1,0 +1,62 @@
+{
+   "general":{
+      "introduction":"Google I/O is an annual conference for software developers which showcases and explores the latest milestones in various technological fields. \n\nThis year's Google I/O will be held during the 17th to 19th May in Mountain View, California. \n\nThe I/O Extended serves as an extension of this event and is aimed towards those who are unable to attend the event in person.\n\n",
+      "datetime":"10:00PM, 17th May 2017",
+      "ticket":"https://ioxkl17.peatix.com",
+      "ticket_soldout":false
+   },
+   "navigation":[
+      {
+         "title":"Home",
+         "shortTitle":"Home",
+         "permalink":"home"
+      },
+      {
+         "title":"Community Guidelines",
+         "shortTitle":"Community Guidelines",
+         "permalink":"communityguidelines"
+      }
+   ],
+   "location":{
+      "address":"iTrain (M) Sdn Bhd, C-19-8, KL Trillion, 338 Jalan Tun Razak, 50400 Kuala Lumpur",
+        "mapCenter": {
+            "latitude": 3.163721,
+            "longitude": 101.71796110000002,
+            "zoom": 16
+        },
+        "pointer": {
+            "latitude": 3.163721,
+            "longitude": 101.71796110000002
+        }
+   },
+   "agenda":{
+      "dateReadable":"",
+      "agenda":[]
+   },
+   "speakers":{},
+   "partners":[
+      {
+         "title":"Organized by",
+         "partner":[
+            {
+               "name":"GDG Kuala Lumpur",
+               "url":"https://www.facebook.com/GDGKualaLumpur/",
+               "logoUrl":"../images/partner/gdgkl.png",
+               "logoWidth":340
+            }
+         ]
+      },
+      {
+         "title":"Made possible with",
+         "partner":[
+            {
+               "name":"Google",
+               "url":"https://www.google.com",
+               "logoUrl":"../images/partner/google.png",
+               "logoWidth":180
+            }
+         ]
+      }
+   ],
+   "footer":"Henry"
+}

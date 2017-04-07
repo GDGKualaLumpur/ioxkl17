@@ -1,0 +1,20 @@
+language: node_js
+node_js: 7
+cache:
+  directories:
+  - node_modules
+  - bower_components
+  - "${NVM_PATH}_modules"
+install:
+- npm install -g bower polymer-cli
+- bower install
+script: echo "Deploying!"
+before_deploy: polymer build
+deploy:
+- provider: firebase
+  skip_cleanup: true
+  on:
+    branch: master
+  project: ioxkl17
+  token:
+    secure: JMMzrUyKIbcIPZVOLvtFAuLP23T7nreoc8+Xsu5WRchqk6vh7bqIFyMA7Kchar/KO39JKcDBn98JndnJ5GZwm883mj0czp38P63dsNpOc/136nqhgrgTcfBmdN35mQnCNa2OMdsDOoOs5VKrCPstx3JNyTKpeN/NbIHEk3IO1OYMBBh9bqiTolcOiaOftopacrmq5++WWdg65gTfinXDyPFQiGPXl0PO/7nAF/zJTgxigpJe/Y0cNceIU2g8GQecbTMo+XwfxKl97P0DmYc9YfIR39U95WCsflU0ITsudi0BRxe9PXVs0izxtWZSieR/n6oLVUHN6/7IVnSh8Tu5u1fndoFcF5kbnZHirBgoQ2XItJuR+2fl/Kx5pwAn2Ek1hJNEnrT8zztFpnE6MLPhMURASCSCto7xoXtWgVDcdksfC1B4pYCWvRGGwCwVZ1NPa9AzLvM/iX7V1ip0cbqBaLIZ231YUFjmvuNubrVz8TMRxAG7JvKucfenDXr7kFgfUNstCA23v/jOf6Nh/bfjmfqjjzEvAQGeW+R9rJSfoH3CmXRACORljV/NeC+S2JgOAGjvGLLoaYsanZNhvSls6IyOz7tFmC/IT02vHuNrwEx87/58E3uTrCFKNy7uAcZGma0PADr59no+sfn3KBOmznAm5J0OxqE/vmGFFvAwNOs=

@@ -1,0 +1,18 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/gdg-app.html",
+  "fragments": [
+    "src/gdg-home.html",
+    "src/gdg-communityguidelines.html"
+  ],
+  "sourceGlobs": [
+    "src/**/*",
+    "images/**/*",
+    "data/**/*",
+    "bower.json"
+  ],
+  "includeDependencies": [
+    "manifest.json",
+    "bower_components/webcomponentsjs/webcomponents-lite.min.js"
+  ]
+}
