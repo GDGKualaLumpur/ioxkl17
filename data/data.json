@@ -54,15 +54,20 @@
                "url":"https://www.google.com",
                "logoUrl":"../images/partner/google.png",
                "logoWidth":180
-            },
+            }       
+         ]
+      },
+      {
+         "title":"Sponsored by",
+         "partner":[
             {
                "name":"JetBrains",
                "url":"https://www.jetbrains.com/",
                "logoUrl":"../images/partner/jetbrains.svg",
-               "logoWidth":130
+               "logoWidth":100
             }            
          ]
-      }      
+      }             
    ],
    "footer":"Henry"
 }
