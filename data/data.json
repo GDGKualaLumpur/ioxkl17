@@ -47,16 +47,27 @@
          ]
       },
       {
-         "title":"Made possible with",
+         "title":"Made possible by",
          "partner":[
             {
                "name":"Google",
                "url":"https://www.google.com",
                "logoUrl":"../images/partner/google.png",
                "logoWidth":180
-            }
+            }       
          ]
-      }
+      },
+      {
+         "title":"Supported by",
+         "partner":[
+            {
+               "name":"JetBrains",
+               "url":"https://www.jetbrains.com/",
+               "logoUrl":"../images/partner/jetbrains.svg",
+               "logoWidth":100
+            }            
+         ]
+      }             
    ],
    "footer":"Henry"
 }
