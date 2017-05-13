@@ -20,7 +20,7 @@ exports.makeConfirmation = functions.https.onRequest((request, response) => {
         .then(_ => initSpreadsheet())
         .then(rows => updateSpreadsheet(rows, request.query.hash))
         .then(data => updateData(data.row, data.rows, data.updateRow, request.query.confirmation))
-        .then(result => response.send(result))
+        .then(result => response.redirect(`https://ioxkl17.firebaseapp.com?msg=${result}`))
         .catch(reason => response.send("Something went wrong, your confirmation is not confirmed. Please contact JT via email: jt@gdg.my\nError: " + reason));
 });
 
