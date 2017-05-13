@@ -10,6 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/google-map/google-map.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="gdg-home">
@@ -38,7 +40,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         white-space: pre-line;
         font-weight: 300;
         line-height: 1.7em;
-        font-size: 1.1em;        
+        font-size: 1.1em;
       }
       google-map{
         height: 400px;
@@ -94,12 +96,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: 12px 0 8px 0;
         font-weight: 300;
         font-size: 1.6em;
-      }    
+      }
       .sponsor .logo{
         display: flex;
         justify-content: center;
-        align-items: center;        
-      }  
+        align-items: center;
+      }
       .sponsor img{
         margin: 24px 18px;
         width: 240px;
@@ -136,21 +138,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         google-map{
           height: 300px;
-        }  
+        }
         .sponsor{
           margin-top: 64px;
         }
         .sponsor h2{
           margin: 12px 0;
           font-size: 1.4em;
-        }    
+        }
+          .yellow-button {
+              text-transform: none;
+              color: #eeff41;
+          }
       }
     </style>
 
     <div class="intro">
       <p>{{app.general.introduction}}</p>
     </div>
-
+    <paper-toast id="toast1" duration="0" text="{{msg}}">
+      <paper-button on-click="toggleToast" class="yellow-button">Close now!</paper-button>
+    </paper-toast>
     <div class="info">
       <div class="container">
         <h2>When and Where</h2>
@@ -181,7 +189,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     Polymer({
-      is: 'gdg-home',
+        is: 'gdg-home',
+        properties: {
+            msg: String
+        },
+        ready: function() {
+            this.msg = this._getParameterByName('msg');
+            if (this.msg != null && this.msg.length > 0){
+                this.toggleToast();
+            }
+        },
+        _getParameterByName: function(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        },
+        toggleToast: function(){
+            this.$.toast1.toggle();
+        }
+
     });
+
   </script>
 </dom-module>
