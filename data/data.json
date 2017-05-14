@@ -12,6 +12,16 @@
          "permalink":"home"
       },
       {
+         "title":"Agenda",
+         "shortTitle":"Agenda",
+         "permalink":"agenda"
+      },
+      {
+         "title":"Speakers",
+         "shortTitle":"Speakers",
+         "permalink":"speakers"
+      },
+      {
          "title":"Community Guidelines",
          "shortTitle":"Community Guidelines",
          "permalink":"communityguidelines"
@@ -31,9 +41,59 @@
    },
    "agenda":{
       "dateReadable":"",
-      "agenda":[]
+      "agenda":[
+         {
+            "startTime":"10:00",
+            "AmPm":"PM",
+            "title":"Arrival and Registration (And Pizzas)",
+            "speaker":""
+         },
+         {
+            "startTime":"11:00",
+            "AmPm":"PM",
+            "title":"Opening",
+            "speaker":"Liew Jun Tung"
+         },
+         {
+            "startTime":"11:10",
+            "AmPm":"PM",
+            "title":"How to Create a Full Fledged App in a Hackathon, Part I (Firebase Cloud Function)",
+            "speaker":"Liew Jun Tung (JT)"
+         },
+         {
+            "startTime":"11:50",
+            "AmPm":"PM",
+            "title":"How to Create a Full Fledged App in a Hackathon, Part II (Firebase + Android)",
+            "speaker":"Tumenbayeva Dara"
+         },
+         {
+            "startTime":"12:30",
+            "AmPm":"AM",
+            "title":"Hangout Live from Mountain View",
+            "speaker":"Henry Lim"
+         },
+         {
+            "startTime":"11:50",
+            "AmPm":"AM",
+            "title":"Google IO '17 Keynote Live Streaming",
+            "speaker":""
+         }
+      ]
    },
-   "speakers":{},
+   "speakers":{
+      "bok":{
+         "name":"Bok Thye Yeow",
+         "position":"Organizer, GDGKL",
+         "photoUrl":"../images/people/jt.jpg",
+         "desc":"Liew Jun Tung (JT) is the lead organizer of GDG Kuala Lumpur and a Full Stack Developer at TABLEAPP, a prominent Malaysian startup for High-end restaurant booking. His passion for software development and the skills he is having now were sparked by meeting the amazing techies who shared their passion and knowledge to him during his university years. He joined GDG Kuala Lumpur and helped organized events such as GDG DevFest and many more in order to contribute back to the community, so that he can encourages and inspires more passionate developers like his predecessors before him."
+      },
+      "vin":{
+         "name":"Tumenbayeva Dara",
+         "position":"Developer, bateriku.com",
+         "photoUrl":"../images/people/dara.jpg",
+         "desc": "Dara is one of the most gung-ho and active Women in Tech in the GDG Kuala Lumpur and many tech communities. Besides that, she is also an Android Developer working at bateriku.com. Driven by her strong passion for technology and love for the community. It is one of her goals that through her own examples, she will inspire more girls and women to be more actively involved in the tech scenes."
+      }
+   },
    "partners":[
       {
          "title":"Organized by",
