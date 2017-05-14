@@ -70,7 +70,7 @@
             "startTime":"12:30",
             "AmPm":"AM",
             "title":"Hangout Live from Mountain View",
-            "speaker":"Henry Lim"
+            "speaker":"Henry Lim, TBA"
          },
          {
             "startTime":"11:50",
@@ -92,6 +92,12 @@
          "position":"Developer, bateriku.com",
          "photoUrl":"../images/people/dara.jpg",
          "desc": "Dara is one of the most gung-ho and active Women in Tech in the GDG Kuala Lumpur and many tech communities. Besides that, she is also an Android Developer working at bateriku.com. Driven by her strong passion for technology and love for the community. It is one of her goals that through her own examples, she will inspire more girls and women to be more actively involved in the tech scenes."
+      },
+      "limshangyi":{
+         "name":"Lim Shang Yi",
+         "position":"Software Developer, Ezypay",
+         "photoUrl":"../images/people/limshangyi.jpg",
+         "desc": "Shang Yi is loves what's interesting in technology. He mainly works with Java and occasionally he codes on Ionic on the weekends, sometimes a bit of electronics. Loves reading creepypastas, and cooks when he's bored."
       }
    },
    "partners":[
