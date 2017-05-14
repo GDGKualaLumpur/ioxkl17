@@ -6,15 +6,10 @@ cache:
   - bower_components
   - "${NVM_PATH}_modules"
 install:
+- npm install -g firebase-tools
 - npm install -g bower polymer-cli
 - bower install
 script: echo "Deploying!"
 before_deploy: polymer build
-deploy:
-- provider: firebase
-  skip_cleanup: true
-  on:
-    branch: master
-  project: ioxkl17
-  token:
-    secure: "eOxSWU8EHGG/yf4Ci8UJ0Mfi41G2K25xnIC9YXNu7zHDobF8osEEGZxfgtVN9dxTp+xPCJO9MvtsLk8yMo8/QDLZA1yTtAgiO+u4GVpNv0gKo4Xmqfd4kCueXRlNbw35kYXbS+yHJ+Szi00Plqpn9KxCF8Mjh3Z57SHXUS8PoIvTpq2mpmKdTrIei/9BTzfkk3NVBrbUgJknWcHUkr+z12HXPHF9s7H8mf9gSK0UoJfpVhzUE/gWEH/ibCBLLEyW8sAfGTYYlfuoV1nJM4q3N6VSE2+Z2JzExTKqRCtOul0Mqx3VinmGPF3F9VBD8q2rt/2j5o43VPsRRN3i2IVcVoLwQF1nFI35KZVIdG+ts4r8QrvnZEvb/gwqwiWIO80jxfPHeQX8F/imMDVnxp6JSaC9keN9dF4W4Xoc8VfjTSHCVGdVk/V9rP0LWJ+l0o2Axsvn0RILqk8GPg3hFXN37LtNq6jhwN5kyxiXn5zHZlZuZx22YKTgcJ39rxgQB2ndASn+GcMw5AEunYsWs0U/v0me0r/ag1SDIbNwFAtOYxiCfMyUKxDUR7LPPES6ljMo/85B6jGifi640VrDeqn5eWa39N+V3XJZgJax9v4c9C/fSX0erAqdFE9fg2dJZmbC1rtYkwk3vyhgJkRBV24HgEgMXL7PnBenV/CI6jp8xcY="
+after_success:
+  - firebase deploy --token $FIREBASE_TOKEN
