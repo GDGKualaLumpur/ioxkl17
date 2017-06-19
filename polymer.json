@@ -22,9 +22,11 @@
     "rules": ["polymer-2"]
   },
   "builds": [{
-    "bundle": true,
-    "js": {"minify": true, "compile": false},
+    "bundle": false,
+    "js": {"minify": true, "compile": true},
     "css": {"minify": true},
-    "html": {"minify": true}
+    "html": {"minify": true},
+    "addPushManifest": true,
+    "insertPrefetchLinks": true
   }]
 }
