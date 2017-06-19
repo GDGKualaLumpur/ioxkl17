@@ -1,0 +1,366 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/lib/mixins/gesture-event-listeners.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="shared-styles.html">
+<link rel="dns-prefetch" href="https://i1.ytimg.com/">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Product+Sans:400,500" crossorigin="anonymous">
+<dom-module id="io-home">
+  <template>
+    <style include="shared-styles">
+       :host {
+        display: block;
+      }
+
+      .hero {
+        position: relative;
+        padding: 10px;
+        max-width: 100%;
+        width: auto;
+      }
+
+      .hero_home {
+        max-width: 480px;
+        width: 60%;
+      }
+
+      .hero .hero_description {
+        margin-bottom: 62px;
+      }
+
+      .hero .hero_date {
+        font-size: 20px;
+        margin: 4px 0;
+      }
+
+      .hero .hero_location {
+        margin: 2px 0;
+        font-size: 16px;
+      }
+
+      .hero_card {
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        position: absolute;
+        top: 0;
+        margin-right: 12px;
+        right: 64px;
+        margin-top: -80px;
+        width: 300px;
+        height: 250px;
+        padding: 30px;
+        color: #424242;
+        box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.07), 0 2px 2px 0 rgba(0, 0, 0, 0.15)
+      }
+
+      .hero_card .hero_card_title {
+        font-size: 28px;
+        line-height: 1.2;
+        margin-bottom: 24px;
+      }
+
+      .hero_card .hero_card_button {
+        margin-top: 52px;
+        background: #1CE8B5;
+        font-weight: 500;
+        display: flex;
+        align-self: flex-start;
+        min-width: 0;
+        padding: 6px 25px;
+        border-radius: 2px;
+        cursor: pointer;
+      }
+
+      .featured_videos {
+
+        background-color: #FAFAFA;
+        padding: 60px 20px;
+      }
+
+      .featured_videos .featured_videos_title {
+        font-family: "Product Sans", arial, sans-serif;
+        padding-left: 32px;
+        font-size: 28px;
+        color: #424242;
+        max-width: 1280px;
+        margin: 24px auto;
+      }
+
+      .featured_videos .featured_videos_content {
+        display: flex;
+        flex-flow: row wrap;
+        margin: 0 auto;
+        max-width: 1280px;
+        padding: 0 8px;
+        box-sizing: border-box;
+      }
+
+      .featured_videos .featured_videos_item {
+        width: 50%;
+        padding: 0 14px;
+        box-sizing: border-box;
+        margin-bottom: 28px;
+      }
+
+
+      .featured_videos .featured_videos_preview {
+        display: block;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .featured_videos .featured_videos_play {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+      }
+
+      .featured_videos .featured_videos_play iron-icon {
+        width: 86px;
+        height: 86px;
+        color: white;
+        opacity: 0.6;
+      }
+
+      .featured_videos .featured_videos_preview iron-image {
+        border-radius: 5px;
+        width: 100%;
+        padding-bottom: 56.25%;
+      }
+
+      .featured_videos .featured_videos_video_title {
+        margin: 4px 0;
+        font-size: 18px;
+        color: #424242;
+      }
+
+      .featured_images {
+        position: relative;
+        margin-bottom: 90px;
+      }
+
+      .featured_images_content {
+        overflow: hidden;
+      }
+
+      .featured_images_belt {
+        display: flex;
+        overflow: hidden;
+        height: 600px;
+        perspective: 1000px;
+        width: 5400px;
+        backface-visibility: hidden;
+        transform: translateX(0px);
+        cursor: -webkit-grab;
+      }
+
+      .featured_images_card {
+        font-family: "Product Sans", arial, sans-serif;
+        height: 380px;
+        margin-top: -30px;
+        padding: 45px;
+        position: absolute;
+        right: 120px;
+        width: 380px;
+        box-sizing: border-box;
+        bottom: -90px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        background: #00E4FF;
+        color: #000;
+        z-index: 1;
+      }
+
+      .featured_images_card_title {
+        font-size: 22px;
+        margin: 4px 0;
+      }
+
+      .featured_images_card_description {
+        margin: 4px 0;
+        line-height: 1.8;
+        font-size: 15px;
+      }
+
+      .featured_images_belt iron-image {
+        height: 600px;
+        width: 900px;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      @media screen and (max-width: 980px) {
+        .hero_card {
+          right: 32px;
+          margin-right: 0;
+          width: 220px;
+          margin-top: -60px;
+        }
+      }
+
+      @media screen and (max-width: 860px) {
+        .hero {
+          padding: 10px 0 0 0;
+          margin: 0;
+        }
+        .hero_home {
+          margin-left: 32px;
+          max-width: auto;
+          width: 80%;
+          padding: 10px;
+        }
+        .hero_card {
+          background: #00E4FF;
+          padding: 48px 30px;
+          width: 100%;
+          position: initial;
+          margin: -8px 0 0 0;
+          box-sizing: border-box;
+          height: auto;
+        }
+        .hero_card .hero_card_button {
+          margin-top: 36px;
+          padding: 6px 0;
+          background: transparent;
+        }
+        .hero .hero_description {
+          margin: 12px 6px 48px 0;
+        }
+        .featured_videos .featured_videos_title {
+          padding-left: 8px;
+          margin: 0 auto 24px auto;
+        }
+        .featured_videos .featured_videos_item {
+          width: 100%;
+          padding: 0;
+        }
+        .featured_images_card {
+          height: auto;
+          position: initial;
+          width: 100%;
+          right: auto;
+          bottom: auto;
+        }
+        .featured_images_card_title {
+          margin: 12px 0;
+        }
+        .featured_images_belt {
+          width: 4050px;
+          height: 450px;
+        }
+        .featured_images_belt iron-image {
+          width: 675px;
+          height: 450px;
+        }
+      }
+    </style>
+
+    <iron-ajax auto url="../data/home.json" handle-as="json" last-response="{{home}}"></iron-ajax>
+
+    <div class="hero">
+      <div class="hero_home">
+        <div class="hero_title">Google I/O Extended 2017 brings out the best Google technologies all the way from Mountain View to Kuala Lumpur.</div>
+        <div class="hero_description">
+          <div class="hero_date">July 2017</div>
+          <div class="hero_location">Google Malaysia, Kuala Lumpur</div>
+        </div>
+      </div>
+      <div class="hero_card">
+        <div class="hero_card_title">Registration Opens Soon</div>
+        <div class="hero_card_description">Check back soon for more details.</div>
+        <div class="hero_card_button">COMING SOON</div>
+      </div>
+    </div>
+
+    <div class="featured_videos">
+      <div class="featured_videos_title">I/O'17 featured videos</div>
+      <div class="featured_videos_content">
+        <template is="dom-repeat" items="{{home.featuredvideo}}">
+          <div class="featured_videos_item">
+            <a class="featured_videos_preview" href$="{{item.url}}" target="_blank" rel="noopener">
+              <div class="featured_videos_play">
+                <iron-icon icon="io-icons:play"></iron-icon>
+              </div>
+              <iron-image preload fade src$="{{item.image}}" placeholder="{{item.placeholder}}" sizing="contain"></iron-image>
+            </a>
+            <div class="featured_videos_video_title">{{item.title}}</div>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <div class="featured_images">
+      <aside class="featured_images_card">
+        <div class="featured_images_card_title">Memorable moments from I/O Extended 2016 Kuala Lumpur</div>
+        <div class="featured_images_card_description">During the event, you’ll dive into hands-on learning experiences, listen to technical talks, and get a chance to
+          hear more about Google’s latest developer products. Drag photos to explore.</div>
+      </aside>
+      <div class="featured_images_content">
+        <div class="featured_images_belt" id="featured_images_belt">
+          <template is="dom-repeat" items="{{home.highlightimage}}">
+            <iron-image placeholder="{{item.placeholder}}" src$="{{item.image}}" preload fade sizing="cover"></iron-image>
+          </template>
+        </div>
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+    class IoHome extends Polymer.GestureEventListeners(Polymer.Element) {
+      static get is() { return 'io-home'; }
+
+      ready() {
+        super.ready();
+        var startPosition = 0,
+          currentPosition = 0,
+          distancePosition = 0,
+          isMouseDown = false,
+          el = this.$.featured_images_belt;
+
+        Polymer.Gestures.addListener(this.$.featured_images_belt, 'track', e => {
+          if (isMouseDown) {
+            distancePosition = (e.detail.x - startPosition) + currentPosition;
+            if (window.innerWidth < 860) {
+              var belt_width = 4050;
+            }
+            else {
+              var belt_width = 5400;
+            }
+            if (distancePosition < 0 && -distancePosition < (belt_width - window.innerWidth)) {
+              el.style.transform = "translateX(" + distancePosition + "px)";
+            }
+          }
+        });
+        Polymer.Gestures.addListener(this.$.featured_images_belt, 'down', e => {
+          isMouseDown = true;
+          currentPosition = parseInt(getComputedStyle(el, null).getPropertyValue("transform").split(",")[4]);
+          startPosition = e.detail.x;
+        });
+        Polymer.Gestures.addListener(this.$.featured_images_belt, 'up', e => {
+          isMouseDown = false;
+        });
+      }
+    }
+
+    window.customElements.define(IoHome.is, IoHome);
+  </script>
+</dom-module>

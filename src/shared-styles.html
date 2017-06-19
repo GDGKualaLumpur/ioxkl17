@@ -8,63 +8,92 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
 
+<!-- shared styles for all views -->
 <dom-module id="shared-styles">
   <template>
     <style>
-      :root {
-        --dark-primary-color:       #0097A7;
-        --default-primary-color:    #1CE8B5;
-        --light-primary-color:      #B2EBF2;
-        --text-primary-color:       #FFFFFF;
-        --accent-color:             #FFC107;
-        --primary-background-color: #B2EBF2;
-        --primary-text-color:       #212121;
-        --secondary-text-color:     #424242;
-        --disabled-text-color:      #BDBDBD;
-        --divider-color:            #BDBDBD;
-
-        --footer-color:             #FFD500;
-
-        --app-header-background-image-color: #fff;
+      .hero{
+        font-family: "Product Sans",arial,sans-serif;
+        margin-left: 64px;
+        max-width: 480px;
+        width: 60%;
+        color: #424242;
       }
-      .container{
-        margin: 12px 32px;
-        max-width: 960px;
-      }  
-      .container h2{
-        margin: 36px 0 24px 8px;
-        color: var(--secondary-text-color);
+      .hero .hero_title{
+        margin: 24px 0;
         font-weight: 400;
-        font-size: 2em;
+        font-size: 28px;
       }
-      .container .item{
-        padding: 16px 0;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-      }   
-      .container .item .detail{
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-            -ms-flex-direction: column;
-                flex-direction: column;
-        -webkit-box-pack: center;
-            -ms-flex-pack: center;
-                justify-content: center;        
+      .hero .hero_big_title{
+        margin: 42px 6px 24px 6px;
+        font-weight: 400;
+        font-size: 42px;
       }
+      .hero .hero_description{
+        margin: 12px 6px 48px 6px;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 1.6;
+      }
+
+      #accessibility {
+        background-color: rgb(209, 196, 233);
+      }
+
+      #android {
+        background-color: rgb(174, 213, 129);
+      }
+
+      #assistant {
+        background-color: rgb(28, 232, 181);
+      }
+
+      #cloud {
+        background-color: rgb(128, 203, 196);
+      }
+
+      #design {
+        background-color: rgb(248, 187, 208);
+      }
+
+      #firebase {
+        background-color: rgb(255, 213, 79);
+      }
+
+      #iot {
+        background-color: rgb(188, 170, 164);
+      }
+
+      #machinelearning {
+        background-color: rgb(188, 200, 251);
+      }
+
+      #misc {
+        background-color: rgb(197, 201, 233);
+        ;
+      }
+
+      #mobileweb {
+        background-color: rgb(255, 241, 118);
+      }
+
+      #vr {
+        background-color: rgb(255, 138, 101);
+      }
+
+
       @media screen and (max-width: 860px){
-        .container{
-          margin: 0 16px;
+        .hero{
+          width: 80%;
+          margin: 0 0 0 32px;
+          padding: 10px 32px;
         }
-        .container h2{
-          font-size: 1.6em;
-        }        
-      }            
+        .hero .hero_big_title{
+          margin: 24px 6px;
+        }
+      }
     </style>
   </template>
 </dom-module>

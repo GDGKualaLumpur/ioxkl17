@@ -1,96 +1,64 @@
-![preview-web](http://i.imgur.com/HqEltnk.png)
+# Polymer App Toolbox - Starter Kit
 
-# Project Samarium
+[![Build Status](https://travis-ci.org/PolymerElements/polymer-starter-kit.svg?branch=master)](https://travis-ci.org/PolymerElements/polymer-starter-kit)
 
-> Project Samarium is a conference website template for GDG after [Project Cerium](https://github.com/limhenry/cerium) with a newer design.
+This template is a starting point for building apps using a drawer-based
+layout. The layout is provided by `app-layout` elements.
 
-> Template is brought by [Henry Lim](https://twitter.com/henrylim96) from [GDG Kuala Lumpur](https://www.facebook.com/GDGKualaLumpur/).
+This template, along with the `polymer-cli` toolchain, also demonstrates use
+of the "PRPL pattern" This pattern allows fast first delivery and interaction with
+the content at the initial route requested by the user, along with fast subsequent
+navigation by pre-caching the remaining components required by the app and
+progressively loading them on-demand as the user navigates through the app.
 
-> *Do you :heart: it?* Show your support - please, :star: the project.
+The PRPL pattern, in a nutshell:
 
-:zap: [Live demo](https://tfxkl2017.firebaseapp.com/)
+* **Push** components required for the initial route
+* **Render** initial route ASAP
+* **Pre-cache** components for remaining routes
+* **Lazy-load** and progressively upgrade next routes on-demand
 
-## Features
-:white_check_mark: Polymer  
-:white_check_mark: Responsive  
-:white_check_mark: [PRPL pattern](https://www.polymer-project.org/1.0/toolbox/server)  
-:white_check_mark: Optimized and fast  
-:white_check_mark: Editable theme colors  
+### Migrating from Polymer Starter Kit v1?
 
-## Setup
+[Check out our blog post that covers what's changed in PSK2 and how to migrate!](https://www.polymer-project.org/1.0/blog/2016-08-18-polymer-starter-kit-or-polymer-cli.html)
 
-### Prerequisites
+### Quickstart
 
-Install [polymer-cli](https://github.com/Polymer/polymer-cli):
+We've recorded a Polycast to get you up and running with PSK2 fast!
 
-    npm i -g polymer-cli
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=HgJ0XCyBwzY&list=PLNYkxOF6rcIDdS7HWIC_BYRunV6MHs5xo&index=10">
+    <img src="https://img.youtube.com/vi/HgJ0XCyBwzY/0.jpg" alt="Polymer Starter Kit 2 video">
+  </a>
+</p>
 
-and [Bower](https://bower.io/):
+### Setup
 
-    npm i -g bower
+##### Prerequisites
 
-:point_right: **[Fork](https://github.com/limhenry/samarium/fork) this repository** and clone it locally.
+First, install [Polymer CLI](https://github.com/Polymer/polymer-cli) using
+[npm](https://www.npmjs.com) (we assume you have pre-installed [node.js](https://nodejs.org)).
 
-#### Install dependencies
+    npm install -g polymer-cli
 
-    bower install
+Second, install [Bower](https://bower.io/) using [npm](https://www.npmjs.com)
 
-#### Start the development server
+    npm install -g bower
+
+##### Initialize project from template
+
+    mkdir my-app
+    cd my-app
+    polymer init starter-kit
+
+### Start the development server
 
 This command serves the app at `http://localhost:8080` and provides basic URL
 routing for the app:
 
-    polymer serve
-    
-### Configure
-#### SEO
-The project doesn't use any generators, so there is a need to edit manually
-meta data in `index.html`
-```
-<head>
-  <title>TensorFlow Dev Summit 2017 Extended Kuala Lumpur</title>
-  <meta name="description"
-        content="TensorFlow Dev Summit 2017 will be EXTENDED to our beloved city Kuala Lumpur! Let's have a day to learn about TensorFlow with industry experts via talks and codelabs!">
-  <meta name="author" content="Henry Lim, GDG Kuala Lumpur">
-  ...
-```
-#### Google Analytics
-Replace GA tracking code in `index.html`
-```
-ga('create', 'UA-XXXXXXXX-X', 'auto');
-```
-#### Site Content
-The most important file of configuration is data/data.json which looks like:
-```
-    "general": {...},
-    "navigation": [...],
-    "location": {...},
-    "agenda": {...},
-    "speakers": [...],
-    "partners": [...]
-```
+    polymer serve --open
 
-#### Styling
-Styling of your app can be found in `src/shared-styles.html`.
- 
-##### Colors
-Generate your own color scheme with [Material Palette](https://www.materialpalette.com/) and click download Polymer
-![material_design_palette_generator](https://cloud.githubusercontent.com/assets/2954281/17750340/a02f8e76-64ca-11e6-80f0-53392b30f89a.png)
-
-Now Replace next section
-```
---dark-primary-color:       #E64A19;
---default-primary-color:    #FF5722;
---light-primary-color:      #FFCCBC;
---text-primary-color:       #FFFFFF;
---accent-color:             #607D8B;
---primary-background-color: #FFCCBC;
---primary-text-color:       #414141;
---secondary-text-color:     #757575;
---disabled-text-color:      #BDBDBD;
---divider-color:            #BDBDBD;
-```
-## Build
+### Build
 
 This command performs HTML, CSS, and JS minification on the application
 dependencies, and generates a service-worker.js file with code to pre-cache the
@@ -104,41 +72,37 @@ H2/push-compatible servers or to clients that do not support H2/Push.
 
     polymer build
 
-## Who uses the template?
+### Preview the build
 
-Going to use the template? Go on! The only thing we ask - let us know with a
-pull request, so we can include you in this list.
+This command serves the minified version of the app at `http://localhost:8080`
+in an unbundled state, as it would be served by a push-compatible server:
 
-|Event Name|Link|Organization|
-|------|------|------|
-| TensorFlow Dev Summit 2017 Extended Kuala Lumpur | [https://tfxkl2017.firebaseapp.com/](https://tfxkl2017.firebaseapp.com/)|GDG Kuala Lumpur|
+    polymer serve build/unbundled
 
-## Roadmap :rocket:
-:x: Offline access  
-:x: Service worker  
-:x: Animation  
-:x: Push notification    
-:x: Polymer 2.0/ES2015  
-:x: Accessibility    
-:x: Unit/Integration Tests    
-:point_right: __Propose your feature with [creating an issue](https://github.com/limhenry/samarium/issues/new)__
+This command serves the minified version of the app at `http://localhost:8080`
+generated using fragment bundling:
 
-## Contributing
+    polymer serve build/bundled
 
-Project Samarium is still under development, and it is open for contributions.
-Feel free to send PR. If you have any questions, feel free to contact
-[Henry Lim](https://twitter.com/henrylim96).
+### Run tests
 
-## General workflow
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Make your changes
-4. Run the tests, adding new ones for your code if necessary
-5. Commit your changes (`git commit -am 'Added some feature'`)
-6. Push to the branch (`git push origin my-new-feature`)
-7. Create new Pull Request
+This command will run [Web Component Tester](https://github.com/Polymer/web-component-tester)
+against the browsers currently installed on your machine:
 
-## License
+    polymer test
 
-Project is published under the [MIT license](https://github.com/limhenry/samarium/blob/master/LICENSE.md).  
-Feel free to clone and modify repo as you want, but don't forget to add reference to authors :)
+If running Windows you will need to set the following environment variables:
+
+- LAUNCHPAD_BROWSERS
+- LAUNCHPAD_CHROME
+
+Read More here [daffl/launchpad](https://github.com/daffl/launchpad#environment-variables-impacting-local-browsers-detection)
+
+### Adding a new view
+
+You can extend the app by adding more views that will be demand-loaded
+e.g. based on the route, or to progressively render non-critical sections of the
+application. Each new demand-loaded fragment should be added to the list of
+`fragments` in the included `polymer.json` file. This will ensure those
+components and their dependencies are added to the list of pre-cached components
+and will be included in the `bundled` build.

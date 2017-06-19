@@ -1,0 +1,56 @@
+[{
+    "time": "9",
+    "ampm": "A",
+    "session": [{
+        "time": "9AM - 10AM",
+        "title": "Registration",
+        "location": "Moonshot",
+        "duration": "1 hour",
+        "tag": [],
+        "description": ""
+    }]
+},{
+    "time": "10",
+    "ampm": "A",
+    "session": [{
+        "time": "10AM - 10:15AM",
+        "title": "I/O Extended 2017 Opening",
+        "location": "Moonshot",
+        "duration": "15 mins",
+        "tag": [],
+        "description": ""
+    }]
+},{
+    "time": "1015",
+    "ampm": "A",
+    "session": [{
+        "time": "10:15AM - 11AM",
+        "title": "Keynote",
+        "location": "Moonshot",
+        "duration": "45 mins",
+        "tag": [],
+        "description": "Join us to learn about product and platform innovation at Google."
+    }]
+},{
+    "time": "115",
+    "ampm": "P",
+    "session": [{
+        "time": "1:15PM - 2PM",
+        "title": "Lunch",
+        "location": "Moonshot",
+        "duration": "45 mins",
+        "tag": [],
+        "description": ""
+    }]
+},{
+    "time": "5",
+    "ampm": "P",
+    "session": [{
+        "time": "5PM - 5:30PM",
+        "title": "Photo Session & Closing",
+        "location": "Moonshot",
+        "duration": "30 mins",
+        "tag": [],
+        "description": ""
+    }]
+}]

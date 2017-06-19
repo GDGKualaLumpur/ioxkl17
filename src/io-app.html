@@ -1,0 +1,436 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="io-icons.html">
+<link rel="import" href="effects/resize-header.html">
+<link rel="import" href="shared-styles.html">
+
+<link rel="lazy-import" href="io-home.html">
+<link rel="lazy-import" href="io-sessions.html">
+<link rel="lazy-import" href="io-attending.html">
+<link rel="lazy-import" href="io-cod.html">
+
+<dom-module id="io-app">
+  <template>
+    <style include="shared-styles">
+       :host {
+        --app-primary-color: #4285f4;
+        --app-secondary-color: black;
+
+        display: block;
+      }
+
+      app-drawer-layout:not([narrow]) [drawer-toggle] {
+        display: none;
+      }
+
+      app-header {
+        color: #424242;
+        /*background-color: var(--app-primary-color);*/
+      }
+
+      app-header paper-icon-button {
+        display: none;
+        --paper-icon-button-ink-color: #424242;
+      }
+
+      .nav-list {
+        margin-right: 24px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+
+      .nav-list a {
+        box-sizing: border-box;
+        align-items: center;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        vertical-align: middle;
+        color: #4A4A4A;
+        font-size: 14px;
+        padding: 3px 12px 0 12px;
+        font-weight: 500;
+        text-decoration: none;
+        text-transform: uppercase;
+        border-bottom: 3px solid transparent;
+        -webkit-transition: border-bottom 150ms ease-in-out;
+        -moz-transition: border-bottom 150ms ease-in-out;
+        transition: border-bottom 150ms ease-in-out;
+      }
+
+      .nav-list a:hover {
+        border-bottom: 3px solid #BCC8FB;
+      }
+
+      .nav-list a.iron-selected {
+        border-bottom: 3px solid #536DFE;
+      }
+
+      .drawer-list {
+        margin: 0 20px;
+      }
+
+      .drawer-list a {
+        display: block;
+        padding: 0 16px;
+        text-decoration: none;
+        color: var(--app-secondary-color);
+        line-height: 40px;
+      }
+
+      .drawer-list a.iron-selected {
+        color: black;
+        font-weight: bold;
+      }
+
+      .drawer-list a:focus{
+        outline: none;
+      }
+
+      iron-pages{
+        @apply --layout-flex;
+        min-height: 100vh;
+      }
+
+      paper-dialog {
+        width: 100%;
+        max-width: 850px;
+      }
+
+      paper-dialog .header {
+        margin: 0;
+        padding: 0;
+      }
+
+      paper-dialog paper-icon-button {
+        margin: 12px;
+      }
+
+      paper-dialog .session_header,
+      paper-dialog .content {
+        margin: 0;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center
+      }
+
+      paper-dialog .session_header {
+        font-family: "Product Sans", arial, sans-serif;
+        min-height: 160px;
+        padding: 0 20px;
+      }
+
+      paper-dialog .content {
+        padding: 40px 20px;
+        line-height: 28px;
+      }
+
+      paper-dialog .session_title,
+      paper-dialog .session_detail {
+        max-width: 590px;
+        flex-grow: 1;
+      }
+
+      paper-dialog .session_header h1 {
+        line-height: 1.1;
+        margin: 32px auto;
+        color: #4A4A4A;
+        font-weight: 400;
+      }
+
+      paper-dialog .session_meta {
+        font-family: "Product Sans", arial, sans-serif;
+        margin: 12px 0;
+        font-size: 18px;
+        line-height: 28px;
+      }
+
+      paper-dialog .session_description {
+        margin: 18px 0;
+        font-size: 15px;
+      }
+
+      paper-dialog .session_tag{
+        height: 24px;
+        padding: 6px 8px;
+        font-size: 12px;
+        box-sizing: border-box;
+        line-height: 16px;
+        margin: 0 4px;
+      }
+
+      app-toolbar img[main-title] {
+        margin-left: 64px;
+      }
+
+      app-toolbar img[condensed-title] {
+        margin-left: 24px;
+        vertical-align: middle;
+      }
+
+      footer .footer_hashtag {
+        padding: 120px 80px 96px;
+      }
+
+      footer .footer_content {
+        background: #FAFAFA;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 50px 80px;
+      }
+
+      footer .footer_logo {
+        width: 120px;
+      }
+
+      footer .footer_logo img {
+        width: 100%;
+        height: auto;
+      }
+
+      footer .footer_social a {
+        display: inline-block;
+        height: 24px;
+        margin-right: 20px;
+        text-align: center;
+        vertical-align: middle;
+        width: 24px;
+      }
+
+      footer .footer_social iron-icon {
+        max-height: 100%;
+        max-width: 100%;
+        vertical-align: middle;
+        pointer-events: none;
+      }
+
+      @media screen and (max-width: 860px) {
+        app-header paper-icon-button{
+          display: flex;
+        }
+        .nav-list {
+          display: none;
+        }
+        app-toolbar img[main-title] {
+          margin-left: 32px;
+        }
+        app-toolbar img[condensed-title] {
+          margin-left: 6px;
+        }
+        footer .footer_hashtag{
+          padding: 64px 20px 32px 20px;
+        }
+        footer .footer_hashtag img{
+          max-width: 220px;
+          width: 90%;
+        }
+        footer .footer_content{
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 50px 20px;
+        }
+        footer .footer_social{
+          margin-top: 12px;
+        }
+        footer .footer_social a{
+          margin-right: 6px;
+        }
+      }
+    </style>
+
+    <paper-dialog with-backdrop id="dialog">
+      <div class="header" id$="{{_toLowerCase(sessiondetail.tag.0)}}">
+        <paper-icon-button icon="io-icons:arrow-back" dialog-dismiss></paper-icon-button>
+        <div class="session_header">
+          <h1 class="session_title">{{sessiondetail.title}}</h1>
+        </div>
+      </div>
+      <div class="content">
+        <div class="session_detail">
+          <div class="session_meta">
+            <div class="session_time">{{sessiondetail.time}} / {{sessiondetail.duration}}</div>
+            <div class="session_location">{{sessiondetail.location}}</div>
+          </div>
+          <div class="session_description">{{sessiondetail.description}}</div>
+        </div>
+      </div>
+    </paper-dialog>
+
+    <app-location route="{{route}}"></app-location>
+    <app-route route="{{route}}" pattern="[[rootPattern]]:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+
+    <app-drawer-layout force-narrow fullbleed>
+      <!-- Drawer content -->
+      <app-drawer id="drawer" slot="drawer" align="right">
+        <app-toolbar>Menu</app-toolbar>
+        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+          <a name="home" href="home">Home</a>
+          <a name="sessions" href="sessions">Sessions</a>
+          <a name="attending" href="attending">Attending</a>
+          <a name="cod" href="cod">Code of Conduct</a>
+        </iron-selector>
+        
+      </app-drawer>
+
+      <!-- Main content -->
+      <app-header-layout>
+        <app-header slot="header" fixed condenses effects="resize-header">
+          <app-toolbar style="background-color: white; border-bottom: 1px solid #ede">
+            <div>
+              <img src="../images/io.svg" condensed-title width="56.5" height="40">
+            </div>
+            <div style="flex:1"></div>
+            <iron-selector selected="[[page]]" attr-for-selected="name" class="nav-list" role="navigation">
+              <a name="home" href="home">Home</a>
+              <a name="sessions" href="sessions">Sessions</a>
+              <a name="attending" href="attending">Attending</a>
+              <a name="cod" href="cod">Code of Conduct</a>
+            </iron-selector>
+            <paper-icon-button icon="io-icons:menu" drawer-toggle></paper-icon-button>
+          </app-toolbar>
+          <app-toolbar style="height: 240px; background-color: transparent; align-items: flex-end">
+            <div>
+              <img src="../images/io.svg" main-title width="188" height="133">
+            </div>
+          </app-toolbar>
+        </app-header>
+
+        <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
+          <io-home name="home"></io-home>
+          <io-sessions name="sessions"></io-sessions>
+          <io-attending name="attending"></io-attending>
+          <io-cod name="cod"></io-cod>
+        </iron-pages>
+
+        <footer>
+          <div class="footer_hashtag">
+            <img src="../images/iohashtag.svg" width="277" height="95">
+          </div>
+          <div class="footer_content">
+            <div class="footer_logo">
+              <img src="../images/gdgkl.svg" width="630" height="138">
+            </div>
+            <div class="footer_social">
+              <a aria-label="Facebook" href="https://www.facebook.com/GDGKualaLumpur/" target="_blank" rel="noopener">
+                <iron-icon icon="io-icons:facebook"></iron-icon>
+              </a>
+              <a aria-label="Google Plus" href="https://plus.google.com/+GdgMy" target="_blank" rel="noopener">
+                <iron-icon icon="io-icons:googleplus"></iron-icon>
+              </a>
+              <a aria-label="Twitter" href="https://twitter.com/gdgkl" target="_blank" rel="noopener">
+                <iron-icon icon="io-icons:twitter"></iron-icon>
+              </a>
+            </div>
+          </div>
+        </footer>
+      </app-header-layout>
+    </app-drawer-layout>
+  </template>
+
+  <script>
+    class IoApp extends Polymer.Element {
+
+      static get is() { return 'io-app'; }
+
+      static get properties() {
+        return {
+          page: {
+            type: String,
+            reflectToAttribute: true,
+            observer: '_pageChanged',
+          },
+          rootPattern: String,
+          routeData: Object,
+          subroute: String,
+          sessiondetail: Object
+        };
+      }
+
+      static get observers() {
+        return [
+          '_routePageChanged(routeData.page)',
+        ];
+      }
+
+      constructor() {
+        super();
+
+        // Get root pattern for app-route, for more info about `rootPath` see:
+        // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
+        this.rootPattern = (new URL(this.rootPath)).pathname;
+      }
+
+      _routePageChanged(page) {
+        // Polymer 2.0 will call with `undefined` on initialization.
+        // Ignore until we are properly called with a string.
+        if (page === undefined) {
+          return;
+        }
+
+        // If no page was found in the route data, page will be an empty string.
+        // Deault to 'view1' in that case.
+        this.page = page || 'home';
+
+        // Close a non-persistent drawer when the page & route are changed.
+        if (!this.$.drawer.persistent) {
+          this.$.drawer.close();
+        }
+      }
+
+      _pageChanged(page) {
+        Polymer.AppLayout.scroll({top: 0, behavior: 'silent'});
+        // Load page import on demand. Show 404 page if fails
+        var resolvedPageUrl = this.resolveUrl('io-' + page + '.html');
+        Polymer.importHref(
+          resolvedPageUrl,
+          null,
+          this._showPage404.bind(this),
+          true);
+      }
+
+      _showPage404() {
+        this.page = 'home';
+      }
+
+      ready() {
+        super.ready();
+        this.shadowRoot.querySelector('io-sessions').addEventListener('showdialog', e => { 
+          this.set('sessiondetail', e.detail);
+          this.$.dialog.open() 
+        });
+      }
+
+      _toLowerCase(item){
+        if(!item){
+          return "misc"
+        }
+        return item.replace(/ /g,'').toLowerCase();
+      }
+    }
+
+    window.customElements.define(IoApp.is, IoApp);
+  </script>
+</dom-module>

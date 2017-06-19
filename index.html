@@ -14,113 +14,93 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta charset="utf-8">
     <meta name="generator" content="Polymer Starter Kit">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
-    <link rel="icon" href="/images/favicon.png">
-    <meta name="theme-color" content="#ffd500">
 
-    <title>Google I/O Extended 2017 Kuala Lumpur</title>
+    <title>Google I/O Exteneded 2017 Kuala Lumpur</title>
     <meta name="description" content="Google I/O brings together developers from around the globe for an immersive experience focused on exploring the next generation of tech.">
-    <meta name="author" content="Henry Lim, GDG Kuala Lumpur">
-    <meta itemprop="name" content="Google I/O Extended 2017 Kuala Lumpur">
+
+    <meta itemprop="name" content="Google I/O Exteneded 2017 Kuala Lumpur">
     <meta itemprop="description" content="Google I/O brings together developers from around the globe for an immersive experience focused on exploring the next generation of tech.">
-    <meta itemprop="startDate" content="2017-05-17">
-    <meta itemprop="endDate" content="2017-05-18">    
-    <meta itemprop="url" content="https://ioxkl17.firebaseapp.com/">
-    <meta itemprop="location" content="iTrain Malaysia, C-19-8, KL Trillion, 338 Jalan Tun Razak, 50400 Kuala Lumpur">
-    <link rel="canonical" href="https://ioxkl17.firebaseapp.com/">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Google I/O Extended 2017 Kuala Lumpur">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Google I/O Extended 2017 Kuala Lumpur">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@GDGKL">
-    <meta name="twitter:title" content="Google I/O Extended 2017 Kuala Lumpur">
-    <meta name="twitter:description" content="Google I/O brings together developers from around the globe for an immersive experience focused on exploring the next generation of tech.">
-    <meta name="twitter:image:src" content="https://ioxkl17.firebaseapp.com/images/social/social.png">
-    <meta property="og:title" content="Google I/O Extended 2017 Kuala Lumpur">
+    <meta itemprop="startDate" content="2017-07-22">
+    <meta itemprop="endDate" content="2017-07-22">
+    <meta itemprop="url" content="https://bookie-george-68825.netlify.com">
+    <meta itemprop="location" content="Google Malaysia, Kuala Lumpur">
+
+    <meta property="og:url" content="https://bookie-george-68825.netlify.com">
     <meta property="og:type" content="Event">
-    <meta property="og:image" content="https://ioxkl17.firebaseapp.com/images/social/social.png">
-    <meta property="og:site_name" content="Google I/O brings together developers from around the globe for an immersive experience focused on exploring the next generation of tech.">
+    <meta property="og:image" content="https://storage.googleapis.com/io2017/v1/common/io17-social-1200x630-indigo.png">
+    <meta property="og:title" content="Google I/O Exteneded 2017 Kuala Lumpur">
+    <meta property="og:site_name" content="Google I/O Exteneded 2017 Kuala Lumpur">
     <meta property="og:description" content="Google I/O brings together developers from around the globe for an immersive experience focused on exploring the next generation of tech.">
-    
-    <script type="application/ld+json">
-    {
-      "@context": "http://schema.org",
-      "@type": "Event",
-      "name": "Google I/O Extended 2017 Kuala Lumpur",
-      "startDate" : "2017-05-17",
-      "endDate" : "2017-05-18",
-      "url" : "https://ioxkl17.firebaseapp.com/",
-      "location" : {
-        "@type" : "Place",
-        "name" : "iTrain Malaysia",
-        "address" : "C-19-8, KL Trillion, 338 Jalan Tun Razak, 50400 Kuala Lumpur"
-      }
-    }
-    </script>
+
+    <!--
+      If deploying to a non-root path, replace href="/" with the full path to the project root.
+      For example: href="/polymer-starter-kit/relative-path-example/"
+    -->
+    <base href="/">
+
+    <link rel="icon" href="images/favicon.png">
+
+    <!-- See https://goo.gl/OOhYW5 -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- See https://goo.gl/qRE0vM -->
+    <meta name="theme-color" content="#673ab8">
+
+    <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Google I/O Rewind 2017 Kuala Lumpur">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Google I/O Rewind 2017 Kuala Lumpur">
+
+    <!-- Homescreen icons -->
+    <link rel="apple-touch-icon" href="images/manifest/icon-48x48.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/manifest/icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="96x96" href="images/manifest/icon-96x96.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="images/manifest/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="images/manifest/icon-192x192.png">
+
+    <!-- Tile icon for Windows 8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/manifest/icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#673ab8">
+    <meta name="msapplication-tap-highlight" content="no">
 
     <script>
-      // Setup Polymer options
-      window.Polymer = {
-        dom: 'shadow',
-        lazyRegister: true,
-      };
+      // Register the base URL
+      const baseUrl = document.querySelector('base').href;
 
-      // Load webcomponentsjs polyfill if browser does not support native
-      // Web Components
-      (function() {
-        'use strict';
-
-        var onload = function() {
-          // For native Imports, manually fire WebComponentsReady so user code
-          // can use the same code path for native and polyfill'd imports.
-          if (!window.HTMLImports) {
-            document.dispatchEvent(
-              new CustomEvent('WebComponentsReady', {bubbles: true})
-            );
-          }
-        };
-
-        var webComponentsSupported = (
-          'registerElement' in document
-          && 'import' in document.createElement('link')
-          && 'content' in document.createElement('template')
-        );
-
-        if (!webComponentsSupported) {
-          var script = document.createElement('script');
-          script.async = true;
-          script.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
-          script.onload = onload;
-          document.head.appendChild(script);
-        } else {
-          onload();
-        }
-      })();
-
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-76843776-4', 'auto');
-      ga('send', 'pageview');
-      
+      // Load and register pre-caching Service Worker
+      // if ('serviceWorker' in navigator) {
+      //   window.addEventListener('load', function() {
+      //     navigator.serviceWorker.register(baseUrl + 'service-worker.js');
+      //   });
+      // }
     </script>
 
-    <link rel="import" href="/src/gdg-app.html?ver1.00">
+    <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
+    <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 
+    <!-- Load your application shell -->
+    <link rel="import" href="src/io-app.html">
+
+    <!-- Add any global styles for body, document, etc. -->
     <style>
       body {
         margin: 0;
         font-family: 'Roboto', 'Noto', sans-serif;
         line-height: 1.5;
         min-height: 100vh;
-        background-color: #fff;
+        background-color: #ffffff;
       }
     </style>
   </head>
   <body>
-    <gdg-app></gdg-app>
+    <io-app></io-app>
+    <noscript>
+      Please enable JavaScript to view this website.
+    </noscript>
+    <!-- Built with love using Polymer Starter Kit -->
   </body>
 </html>

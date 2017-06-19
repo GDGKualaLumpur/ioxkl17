@@ -1,0 +1,162 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/lib/mixins/gesture-event-listeners.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="io-sessions">
+  <template>
+    <style include="shared-styles">
+       :host {
+        display: block;
+        /*padding: 10px;*/
+      }
+
+      .hero {
+        padding: 10px;
+      }
+
+      .schedule {
+        font-family: "Product Sans", arial, sans-serif;
+        border-top: 1px solid #dcdcdc;
+        line-height: 1.87;
+      }
+
+      .schedule .schedule_section {
+        display: flex;
+      }
+
+      .schedule .schedule_events {
+        width: 100%;
+      }
+
+      .schedule .schedule_event {
+        border-bottom: 1px solid #dcdcdc;
+      }
+
+      .schedule .schedule_time {
+        padding: 30px 40px;
+        width: 75px;
+        font-size: 24px;
+        border-right: 1px solid #dcdcdc;
+        border-bottom: 1px solid #dcdcdc;
+      }
+
+      .schedule .schedule_time span {
+        margin-left: 4px;
+        font-size: 15px;
+      }
+
+      .schedule .schedule_event {
+        padding: 30px 60px;
+        transition: background-color 150ms ease-in-out;
+        cursor: pointer;
+      }
+
+      .schedule .schedule_event:hover {
+        background-color: #FAFAFA;
+      }
+
+      .schedule .schedule_event_title {
+        color: #4A4A4A;
+        font-size: 22px;
+        line-height: 1.5;
+        margin-bottom: 12px;
+      }
+
+      .schedule .schedule_event_meta {
+        font-size: 15px;
+        display: flex;
+        color: #424242;
+      }
+      .schedule .schedule_event_description{
+        margin-right: 8px;
+      }
+
+      .schedule .schedule_event_tag {
+        background-color: rgb(255, 213, 79);
+        height: 24px;
+        padding: 6px 8px;
+        font-size: 12px;
+        box-sizing: border-box;
+        line-height: 16px;
+        margin: 0 4px;
+      }
+
+      @media screen and (max-width: 860px){
+        .schedule .schedule_section{
+          flex-direction: column;  
+        }
+        .schedule .schedule_time{
+          box-sizing: border-box;
+          width: 100%;
+          padding: 14px 20px;
+          font-size: 20px;
+          background-color: #FAFAFA;
+        }
+        .schedule .schedule_event{
+          padding: 20px;
+        }
+      }
+    </style>
+
+    <iron-ajax
+      auto
+      url="../data/sessions.json"
+      handle-as="json"
+      last-response="{{sessions}}"></iron-ajax>
+
+    <div class="hero">
+      <div class="hero_big_title">Sessions</div>
+      <div class="hero_description">Learn Google's latest developer products from Googlers, Google Developer Experts and more. The schedule will be updated regularly until the event, make sure to check back often.</div>
+    </div>
+
+    <div class="schedule">
+      <template is="dom-repeat" items="{{sessions}}">
+        <div class="schedule_section">
+          <div class="schedule_time">{{item.time}}<span>{{item.ampm}}</span></div>
+          <div class="schedule_events">
+            <template is="dom-repeat" items="{{item.session}}">
+              <div class="schedule_event" on-tap="showDialog">
+                <div class="schedule_event_title">{{item.title}}</div>
+                <div class="schedule_event_meta">
+                  <div class="schedule_event_description">{{item.duration}} / {{item.location}}</div>
+                  <template is="dom-repeat" items="{{item.tag}}">
+                    <div class="schedule_event_tag" id="{{_toLowerCase(item)}}">{{item}}</div>
+                  </template>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+      </template>
+    </div>
+
+  </template>
+
+  <script>
+    class IoSessions extends Polymer.GestureEventListeners(Polymer.Element) {
+      static get is() { return 'io-sessions'; }
+
+      showDialog(e){
+        this.dispatchEvent(new CustomEvent('showdialog', {detail: e.model.item}));
+      }
+
+      _toLowerCase(item){
+        return item.replace(/ /g,'').toLowerCase();
+      }
+    }
+
+    window.customElements.define(IoSessions.is, IoSessions);
+  </script>
+</dom-module>
