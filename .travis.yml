@@ -5,11 +5,10 @@ cache:
   - node_modules
   - bower_components
   - "${NVM_PATH}_modules"
-install:
-- npm install -g firebase-tools
-- npm install -g bower polymer-cli
+before_script:
+- npm install -g bower polymer-cli firebase-tools
 - bower install
-script: echo "Deploying!"
-before_deploy: polymer build
+script: 
+- polymer build
 after_success:
-  - firebase deploy --token $FIREBASE_TOKEN --only hosting
+- firebase deploy --token $FIREBASE_TOKEN --non-interactive
