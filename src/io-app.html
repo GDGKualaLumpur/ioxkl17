@@ -55,10 +55,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --paper-icon-button-ink-color: #424242;
       }
 
-      
-
       .drawer-list {
-        margin: 0 20px;
+        margin: 0;
       }
 
       .drawer-list a {
@@ -203,6 +201,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         .nav-list {
           display: none;
         }
+        .nav-list.no-tab{
+          margin-right: 0;
+          display: flex;
+        }
         app-toolbar img[main-title] {
           margin-left: 20px;
         }
@@ -258,7 +260,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <app-route route="{{route}}" pattern="[[rootPattern]]:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
 
     <app-drawer-layout force-narrow fullbleed>
-      <app-drawer id="drawer" slot="drawer" align="right">
+      <app-drawer id="drawer" slot="drawer" align="right" swipe-open>
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="home" href="home">Home</a>
