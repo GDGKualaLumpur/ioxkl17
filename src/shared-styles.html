@@ -39,6 +39,56 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         line-height: 1.6;
       }
 
+.nav-list:last-of-type {
+        margin-right: 24px;
+      }
+
+      .nav-list {
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+
+      .nav-list a {
+        box-sizing: border-box;
+        align-items: center;
+        height: 100%;
+        display: flex;
+        cursor: pointer;
+        justify-content: center;
+        vertical-align: middle;
+        color: #4A4A4A;
+        font-size: 14px;
+        padding: 3px 12px 0 12px;
+        font-weight: 500;
+        text-decoration: none;
+        text-transform: uppercase;
+        border-bottom: 3px solid transparent;
+        -webkit-transition: border-bottom 150ms ease-in-out;
+        -moz-transition: border-bottom 150ms ease-in-out;
+        transition: border-bottom 150ms ease-in-out;
+      }
+
+      .nav-list a:hover,
+      .nav-list.no-tab a.iron-selected:hover {
+        border-bottom: 3px solid #BCC8FB;
+      }
+
+      .nav-list a.iron-selected {
+        border-bottom: 3px solid #536DFE;
+      }
+
+      .nav-list.no-tab img {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        cursor: pointer;
+        padding: 0 14px;
+      }
+
+      .nav-list.no-tab a.iron-selected {
+        border-bottom: 3px solid transparent;
+      }
       #accessibility {
         background-color: rgb(209, 196, 233);
       }
