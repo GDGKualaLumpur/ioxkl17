@@ -27,6 +27,7 @@
     "css": {"minify": true},
     "html": {"minify": true},
     "addPushManifest": true,
-    "insertPrefetchLinks": true
+    "insertPrefetchLinks": true,
+    "addServiceWorker": true
   }]
 }

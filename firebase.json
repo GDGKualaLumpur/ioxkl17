@@ -13,6 +13,13 @@
         "source": "**/!(*.js|*.html|*.css|*.json|*.svg|*.png|*.jpg|*.jpeg)",
         "destination": "/index.html"
       }
-    ]
+    ],
+    "headers": [{
+      "source" : "**/service-worker.js",
+      "headers": [{
+        "key" : "Cache-Control",
+        "value" : "private, max-age=0, no-cache"
+      }]
+    }]
   }
 }

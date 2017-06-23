@@ -21,6 +21,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
 <link rel="import" href="io-icons.html">
@@ -74,6 +75,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .drawer-list a:focus {
         outline: none;
+      }
+
+      paper-toast span {
+        @apply(--layout-self-center);
+        padding-left: 12px;
+        color: #1CE8B5;
+        text-transform: uppercase;
+        font-weight: 500;
+        cursor: pointer;
+        white-space: nowrap;
+        user-select: none;
       }
 
       iron-pages {
@@ -195,13 +207,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       @media screen and (max-width: 860px) {
+        paper-toast {
+          width: 100%;
+          min-width: 0;
+          border-radius: 0;
+          margin: 0;
+        }
         app-header paper-icon-button {
           display: flex;
         }
         .nav-list {
           display: none;
         }
-        .nav-list.no-tab{
+        .nav-list.no-tab {
           margin-right: 0;
           display: flex;
         }
@@ -237,6 +255,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </firebase-app>
     <firebase-auth id="auth" user="{{user}}" provider="google" on-error="handleError">
     </firebase-auth>
+
+    <paper-toast id="toast" text="A new version of this app is available." duration="3000">
+      <span on-tap="reload">Refresh Now</span>
+    </paper-toast>
 
     <paper-dialog with-backdrop id="dialog">
       <div class="header" id$="{{_toLowerCase(sessiondetail.tag.0)}}">
@@ -398,13 +420,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.page = 'home';
       }
 
+      _toggleToast() {
+        this.$.toast.toggle();
+      }
+
+      reload() {
+        window.location.reload();
+      }
+
       signIn() {
         if (this.user) {
           this.$.auth.signOut();
         }
         else {
           this.$.auth.signInWithPopup()
-            .then(function (response) {})
+            .then(function (response) { })
             .catch(function (error) {
               console.log(error)
             });
