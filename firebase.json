@@ -16,10 +16,22 @@
     ],
     "headers": [{
       "source" : "**/service-worker.js",
-      "headers": [{
-        "key" : "Cache-Control",
-        "value" : "private, max-age=0, no-cache"
-      }]
+      "headers": [{"key" : "Cache-Control", "value" : "private, max-age=0, no-cache"}]
+    },{
+      "source": "/*",
+      "headers": [{"key": "Link", "value": "</bower_components/webcomponentsjs/custom-elements-es5-adapter.js>;rel=preload;as=script,</bower_components/webcomponentsjs/webcomponents-loader.js>;rel=preload;as=script,</src/io-app.html>;rel=preload;as=document,</src/io-home.html>;rel=preload;as=document"}]
+    },{
+      "source": "/attending",
+      "headers": [{"key": "Link", "value": "</bower_components/webcomponentsjs/custom-elements-es5-adapter.js>;rel=preload;as=script,</bower_components/webcomponentsjs/webcomponents-loader.js>;rel=preload;as=script,</src/io-app.html>;rel=preload;as=document,</src/io-attending.html>;rel=preload;as=document"}]
+    },{
+      "source": "/cod",
+      "headers": [{"key": "Link", "value": "</bower_components/webcomponentsjs/custom-elements-es5-adapter.js>;rel=preload;as=script,</bower_components/webcomponentsjs/webcomponents-loader.js>;rel=preload;as=script,</src/io-app.html>;rel=preload;as=document,</src/io-cod.html>;rel=preload;as=document"}]
+    },{
+      "source": "/home",
+      "headers": [{"key": "Link", "value": "</bower_components/webcomponentsjs/custom-elements-es5-adapter.js>;rel=preload;as=script,</bower_components/webcomponentsjs/webcomponents-loader.js>;rel=preload;as=script,</src/io-app.html>;rel=preload;as=document,</src/io-home.html>;rel=preload;as=document"}]
+    },{
+      "source": "/sessions",
+      "headers": [{"key": "Link", "value": "</bower_components/webcomponentsjs/custom-elements-es5-adapter.js>;rel=preload;as=script,</bower_components/webcomponentsjs/webcomponents-loader.js>;rel=preload;as=script,</src/io-app.html>;rel=preload;as=document,</src/io-sessions.html>;rel=preload;as=document"}]
     }]
   }
 }
