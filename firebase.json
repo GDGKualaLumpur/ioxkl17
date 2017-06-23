@@ -18,7 +18,7 @@
       "source" : "**/service-worker.js",
       "headers": [{"key" : "Cache-Control", "value" : "private, max-age=0, no-cache"}]
     },{
-      "source": "/*",
+      "source": "/",
       "headers": [{"key": "Link", "value": "</bower_components/webcomponentsjs/custom-elements-es5-adapter.js>;rel=preload;as=script,</bower_components/webcomponentsjs/webcomponents-loader.js>;rel=preload;as=script,</src/io-app.html>;rel=preload;as=document,</src/io-home.html>;rel=preload;as=document"}]
     },{
       "source": "/attending",
