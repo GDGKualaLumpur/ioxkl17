@@ -94,8 +94,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       paper-dialog {
+        overflow: auto;
         width: 100%;
         max-width: 850px;
+      }
+
+      paper-dialog dom-if{
+        padding: 0;
+        margin-top: 0;
       }
 
       paper-dialog .header {
@@ -108,6 +114,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       paper-dialog .session_header,
+      paper-dialog .speaker_header,
       paper-dialog .content {
         margin: 0;
         display: flex;
@@ -115,10 +122,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         justify-content: center
       }
 
-      paper-dialog .session_header {
+      paper-dialog .session_header{
         font-family: "Product Sans", arial, sans-serif;
         min-height: 160px;
         padding: 0 20px;
+      }
+
+      paper-dialog .speaker_header{
+        font-family: "Product Sans", arial, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 260px;
+        padding: 0 20px;
+        line-height: 1.5;
+        max-width: 590px;
+        margin: -40px auto 0 auto;
+      }
+
+      paper-dialog .speaker_header .speaker_photo{
+        width: 96px;
+        height: 96px;
+        border-radius: 50%;
+        margin-right: 24px;
+        background-size: cover;
+      }
+
+      paper-dialog .speaker_header .speaker_name{
+        font-size: 38px;
+      }
+      paper-dialog .speaker_header .speaker_title{
+        font-size: 18px;
       }
 
       paper-dialog .content {
@@ -127,12 +161,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       paper-dialog .session_title,
-      paper-dialog .session_detail {
+      paper-dialog .speaker_title,
+      paper-dialog .session_detail,
+      paper-dialog .speaker_detail {
         max-width: 590px;
         flex-grow: 1;
       }
 
-      paper-dialog .session_header h1 {
+      paper-dialog .session_header h1,
+      paper-dialog .speaker_header h1 {
         line-height: 1.1;
         margin: 32px auto;
         color: #4A4A4A;
@@ -146,7 +183,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         line-height: 28px;
       }
 
-      paper-dialog .session_description {
+      paper-dialog .session_description,
+      paper-dialog .speaker_description {
         margin: 18px 0;
         font-size: 15px;
       }
@@ -158,6 +196,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         box-sizing: border-box;
         line-height: 16px;
         margin: 0 4px;
+      }
+
+      paper-dialog .session_speaker {
+        margin-top: 32px;
+        display: inline-flex;
+        cursor: pointer;
+        align-items: center;
+      }
+
+      paper-dialog .session_speaker_photo {
+        width: 58px;
+        height: 58px;
+        background-size: cover;
+        border-radius: 50%;
+        margin-right: 18px;
+        background-color: #5471f9;
+      }
+
+      paper-dialog .session_speaker_name {
+        font-size: 18px;
       }
 
       app-toolbar img[main-title] {
@@ -229,6 +287,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         app-toolbar img[condensed-title] {
           margin-left: 6px;
         }
+        paper-dialog {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          padding: 0;
+          margin: 0;
+          box-sizing: border-box;
+          
+        }
         footer .footer_hashtag {
           padding: 64px 20px 32px 20px;
         }
@@ -260,22 +329,51 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <span on-tap="reload">Refresh Now</span>
     </paper-toast>
 
-    <paper-dialog with-backdrop id="dialog">
-      <div class="header" id$="{{_toLowerCase(sessiondetail.tag.0)}}">
-        <paper-icon-button icon="io-icons:arrow-back" dialog-dismiss></paper-icon-button>
-        <div class="session_header">
-          <h1 class="session_title">{{sessiondetail.title}}</h1>
-        </div>
-      </div>
-      <div class="content">
-        <div class="session_detail">
-          <div class="session_meta">
-            <div class="session_time">{{sessiondetail.time}} / {{sessiondetail.duration}}</div>
-            <div class="session_location">{{sessiondetail.location}}</div>
+    <paper-dialog on-iron-overlay-closed="_onPaperDialogChanged" on-iron-overlay-opened="_onPaperDialogChanged" with-backdrop id="dialog">
+      
+      <template is="dom-if" if="{{speakerdetail}}">
+        <div class="header" id$="{{_toLowerCase(sessiondetail.tag.0)}}">
+          <paper-icon-button icon="io-icons:arrow-back" on-tap="showSession"></paper-icon-button>
+          <div class="speaker_header">
+            <div class="speaker_photo" style$="background-image: url({{speakerdetail.picture}})"></div>
+            <div class="session_speaker_info">
+              <div class="speaker_name">{{speakerdetail.name}}</div>
+              <div class="speaker_title">{{speakerdetail.title}}</div>
+            </div>
           </div>
-          <div class="session_description">{{sessiondetail.description}}</div>
         </div>
-      </div>
+        <div class="content">
+          <div class="speaker_detail">
+            <div class="speaker_description">{{speakerdetail.description}}</div>
+          </div>
+        </div>
+      </template>
+      <template is="dom-if" if="{{!speakerdetail}}">
+        <div class="header" id$="{{_toLowerCase(sessiondetail.tag.0)}}">
+          <paper-icon-button icon="io-icons:arrow-back" dialog-dismiss></paper-icon-button>
+          <div class="session_header">
+            <h1 class="session_title">{{sessiondetail.title}}</h1>
+          </div>
+        </div>
+        <div class="content">
+          <div class="session_detail">
+            <div class="session_meta">
+              <div class="session_time">{{sessiondetail.time}} / {{sessiondetail.duration}}</div>
+              <div class="session_location">{{sessiondetail.location}}</div>
+            </div>
+            <div class="session_description">{{sessiondetail.description}}</div>
+            <template is="dom-if" if="{{sessiondetail.speaker}}">
+              <div class="session_speaker" on-tap="showSpeaker">
+                <div class="session_speaker_photo" style$="background-image: url({{sessiondetail.speaker.picture}})"></div>
+                <div class="session_speaker_info">
+                  <div class="session_speaker_name">{{sessiondetail.speaker.name}}</div>
+                  <div class="session_speaker_title">{{sessiondetail.speaker.title}}</div>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+      </template>
     </paper-dialog>
 
     <app-location route="{{route}}"></app-location>
@@ -416,6 +514,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           true);
       }
 
+      _onPaperDialogChanged() {
+        if(this.$.dialog.opened){
+          this.shadowRoot.querySelector('app-header').toggleScrollListener(false);
+          this.scrollPos = document.documentElement.scrollTop;
+          this.shadowRoot.querySelector('app-drawer-layout').style.overflowY = 'hidden'
+          this.shadowRoot.querySelector('app-drawer-layout').scrollTop = this.scrollPos;
+        }
+        else{
+          this.shadowRoot.querySelector('app-header').toggleScrollListener(true);
+          this.shadowRoot.querySelector('app-drawer-layout').style.overflow = 'initial';
+          Polymer.AppLayout.scroll({ top: this.scrollPos, behavior: 'silent' });
+        }
+      }
+
       _showPage404() {
         this.page = 'home';
       }
@@ -439,15 +551,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               console.log(error)
             });
         }
-
       }
 
       ready() {
         super.ready();
         this.shadowRoot.querySelector('io-sessions').addEventListener('showdialog', e => {
+          this.set('speakerdetail', null);
           this.set('sessiondetail', e.detail);
           this.$.dialog.open()
         });
+      }
+
+      showSpeaker() {
+        this.set('speakerdetail', this.get('sessiondetail.speaker'));
+        this.$.dialog.notifyResize();
+      }
+
+      showSession() {
+        this.set('speakerdetail', null);
+        this.$.dialog.notifyResize();
       }
 
       _toLowerCase(item) {
