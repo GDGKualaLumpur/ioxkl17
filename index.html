@@ -67,6 +67,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="msapplication-TileColor" content="#6284F3">
   <meta name="msapplication-tap-highlight" content="no">
 
+  <link rel='dns-prefetch' href='https://fonts.googleapis.com'>
+
   <script>
     // Register the base URL
     const baseUrl = document.querySelector('base').href;
@@ -100,11 +102,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
   </script>
 
-  <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
-  <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-
   <!-- Load your application shell -->
-  <link rel="import" href="src/io-app.html">
+  <link rel="import" href="src/io-app.html" async>
 
   <!-- Add any global styles for body, document, etc. -->
   <style>
@@ -115,11 +114,60 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       min-height: 100vh;
       background-color: #ffffff;
     }
+
+    io-app[unresolved] header {
+      box-sizing: border-box;
+      height: 64px;
+      border-bottom: 1px solid rgb(238, 221, 238);
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 40px;
+    }
+
+    io-app[unresolved] header .nav {
+      box-sizing: border-box;
+      align-items: center;
+      height: 100%;
+      display: flex;
+      cursor: pointer;
+      justify-content: center;
+      vertical-align: middle;
+      color: #4A4A4A;
+      font-size: 14px;
+      padding: 2px 12px 0 12px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    @media screen and (max-width: 860px){
+      io-app[unresolved] header{
+        height: 65px;
+      }
+      io-app[unresolved] header .nav{
+        display: none;
+      }
+      io-app[unresolved] header .nav.signin{
+        display: flex;
+        margin-right: 16px;
+        padding-bottom: 1px;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <io-app></io-app>
+  <io-app unresolved>
+    <header>
+      <div class="nav">HOME</div>
+      <div class="nav">SESSIONS</div>
+      <div class="nav">ATTENDING</div>
+      <div class="nav">CODE OF CONDUCT</div>
+      <div class="nav signin">SIGN IN</div>
+    </header>
+  </io-app>
+  <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
+  <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
   <noscript>
     Please enable JavaScript to view this website.
   </noscript>

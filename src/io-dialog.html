@@ -1,0 +1,241 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/lib/mixins/gesture-event-listeners.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="io-dialog">
+    <template>
+        <style include="shared-styles">
+            paper-dialog {
+                overflow: auto;
+                width: 100%;
+                max-width: 850px;
+            }
+
+            paper-dialog dom-if {
+                padding: 0;
+                margin-top: 0;
+            }
+
+            paper-dialog .header {
+                margin: 0;
+                padding: 0;
+            }
+
+            paper-dialog paper-icon-button {
+                margin: 12px;
+            }
+
+            paper-dialog .session_header,
+            paper-dialog .speaker_header,
+            paper-dialog .content {
+                margin: 0;
+                display: flex;
+                align-items: flex-end;
+                justify-content: center
+            }
+
+            paper-dialog .session_header {
+                font-family: "Product Sans", arial, sans-serif;
+                min-height: 160px;
+                padding: 0 20px;
+            }
+
+            paper-dialog .speaker_header {
+                font-family: "Product Sans", arial, sans-serif;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                min-height: 260px;
+                padding: 0 20px;
+                line-height: 1.5;
+                max-width: 590px;
+                margin: -40px auto 0 auto;
+            }
+
+            paper-dialog .speaker_header .speaker_photo {
+                width: 96px;
+                height: 96px;
+                border-radius: 50%;
+                margin-right: 24px;
+                background-size: cover;
+            }
+
+            paper-dialog .speaker_header .speaker_name {
+                font-size: 38px;
+            }
+
+            paper-dialog .speaker_header .speaker_title {
+                font-size: 18px;
+            }
+
+            paper-dialog .content {
+                padding: 40px 20px;
+                line-height: 28px;
+            }
+
+            paper-dialog .session_title,
+            paper-dialog .speaker_title,
+            paper-dialog .session_detail,
+            paper-dialog .speaker_detail {
+                max-width: 590px;
+                flex-grow: 1;
+            }
+
+            paper-dialog .session_header h1,
+            paper-dialog .speaker_header h1 {
+                line-height: 1.1;
+                margin: 32px auto;
+                color: #4A4A4A;
+                font-weight: 400;
+            }
+
+            paper-dialog .session_meta {
+                font-family: "Product Sans", arial, sans-serif;
+                margin: 12px 0;
+                font-size: 18px;
+                line-height: 28px;
+            }
+
+            paper-dialog .session_description,
+            paper-dialog .speaker_description {
+                margin: 18px 0;
+                font-size: 15px;
+            }
+
+            paper-dialog .session_tag {
+                height: 24px;
+                padding: 6px 8px;
+                font-size: 12px;
+                box-sizing: border-box;
+                line-height: 16px;
+                margin: 0 4px;
+            }
+
+            paper-dialog .session_speaker {
+                margin-top: 32px;
+                display: inline-flex;
+                cursor: pointer;
+                align-items: center;
+            }
+
+            paper-dialog .session_speaker_photo {
+                width: 58px;
+                height: 58px;
+                background-size: cover;
+                border-radius: 50%;
+                margin-right: 18px;
+                background-color: #5471f9;
+            }
+
+            paper-dialog .session_speaker_name {
+                font-size: 18px;
+            }
+
+            @media screen and (max-width: 860px) {
+                paper-dialog {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    padding: 0;
+                    margin: 0;
+                    box-sizing: border-box;
+                }
+            }
+        </style>
+
+        <paper-dialog on-iron-overlay-closed="_onPaperDialogChanged" on-iron-overlay-opened="_onPaperDialogChanged" with-backdrop
+            id="dialog">
+            <template is="dom-if" if="{{speakerdetail}}">
+                <div class="header" id$="{{_toLowerCase(sessiondetail.tag.0)}}">
+                    <paper-icon-button icon="io-icons:arrow-back" on-tap="showSession"></paper-icon-button>
+                    <div class="speaker_header">
+                        <div class="speaker_photo" style$="background-image: url({{speakerdetail.picture}})"></div>
+                        <div class="session_speaker_info">
+                            <div class="speaker_name">{{speakerdetail.name}}</div>
+                            <div class="speaker_title">{{speakerdetail.title}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="speaker_detail">
+                        <div class="speaker_description">{{speakerdetail.description}}</div>
+                    </div>
+                </div>
+            </template>
+            <template is="dom-if" if="{{!speakerdetail}}">
+                <div class="header" id$="{{_toLowerCase(sessiondetail.tag.0)}}">
+                    <paper-icon-button icon="io-icons:arrow-back" dialog-dismiss></paper-icon-button>
+                    <div class="session_header">
+                        <h1 class="session_title">{{sessiondetail.title}}</h1>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="session_detail">
+                        <div class="session_meta">
+                            <div class="session_time">{{sessiondetail.time}} / {{sessiondetail.duration}}</div>
+                            <div class="session_location">{{sessiondetail.location}}</div>
+                        </div>
+                        <div class="session_description">{{sessiondetail.description}}</div>
+                        <template is="dom-if" if="{{sessiondetail.speaker}}">
+                            <div class="session_speaker" on-tap="showSpeaker">
+                                <div class="session_speaker_photo" style$="background-image: url({{sessiondetail.speaker.picture}})"></div>
+                                <div class="session_speaker_info">
+                                    <div class="session_speaker_name">{{sessiondetail.speaker.name}}</div>
+                                    <div class="session_speaker_title">{{sessiondetail.speaker.title}}</div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </template>
+        </paper-dialog>
+    </template>
+
+    <script>
+        class IoDialog extends Polymer.GestureEventListeners(Polymer.Element) {
+            static get is() { return 'io-dialog'; }
+
+            showSpeaker() {
+                this.set('speakerdetail', this.get('sessiondetail.speaker'));
+                this.$.dialog.notifyResize();
+            }
+
+            showSession() {
+                this.set('speakerdetail', null);
+                this.$.dialog.notifyResize();
+            }
+
+            _toLowerCase(item) {
+                if (!item) return "misc"
+                return item.replace(/ /g, '').toLowerCase();
+            }
+
+            _onPaperDialogChanged(){
+                this.dispatchEvent(new CustomEvent('dialogchanged', { detail: this.$.dialog.opened }));
+            }
+
+            open(e) {
+                this.set('speakerdetail', null);
+                this.set('sessiondetail', e.detail);
+                this.$.dialog.open()
+            }
+        }
+
+        window.customElements.define(IoDialog.is, IoDialog);
+    </script>
+</dom-module>

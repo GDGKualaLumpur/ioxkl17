@@ -167,3 +167,5 @@ typings/
 
 cert.pem
 key.pem
+
+perf.txt
