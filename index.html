@@ -74,32 +74,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     const baseUrl = document.querySelector('base').href;
 
     // Load and register pre-caching Service Worker
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register(baseUrl + 'service-worker.js').then(function (reg) {
-          reg.onupdatefound = function () {
-            var installingWorker = reg.installing;
-            installingWorker.onstatechange = function () {
-              switch (installingWorker.state) {
-                case 'installed':
-                  if (navigator.serviceWorker.controller) {
-                    document.querySelector('io-app')._toggleToast();
-                  }
-                  else {
-                    console.log('Content is now available offline!');
-                  }
-                  break;
-                case 'redundant':
-                  console.error('The installing service worker became redundant.');
-                  break;
-              }
-            }
-          }
-        }).catch(function (e) {
-          console.error('Error during service worker registration:', e);
-        })
-      });
-    }
+    // if ('serviceWorker' in navigator) {
+    //   window.addEventListener('load', function () {
+    //     navigator.serviceWorker.register(baseUrl + 'service-worker.js').then(function (reg) {
+    //       reg.onupdatefound = function () {
+    //         var installingWorker = reg.installing;
+    //         installingWorker.onstatechange = function () {
+    //           switch (installingWorker.state) {
+    //             case 'installed':
+    //               if (navigator.serviceWorker.controller) {
+    //                 document.querySelector('io-app')._toggleToast();
+    //               }
+    //               else {
+    //                 console.log('Content is now available offline!');
+    //               }
+    //               break;
+    //             case 'redundant':
+    //               console.error('The installing service worker became redundant.');
+    //               break;
+    //           }
+    //         }
+    //       }
+    //     }).catch(function (e) {
+    //       console.error('Error during service worker registration:', e);
+    //     })
+    //   });
+    // }
   </script>
 
   <!-- Load your application shell -->
