@@ -22,7 +22,7 @@
     "rules": ["polymer-2"]
   },
   "builds": [{
-    "bundle": true,
+    "bundle": false,
     "js": {"minify": false, "compile": true},
     "css": {"minify": true},
     "html": {"minify": true},
