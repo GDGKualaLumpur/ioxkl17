@@ -455,7 +455,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
               if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('service-worker.js').then(reg => {
-                  reg.onupdatefound = function () {
+                  reg.onupdatefound = () => {
                     var installingWorker = reg.installing;
                     installingWorker.onstatechange = () => {
                       switch (installingWorker.state) {
