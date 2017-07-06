@@ -24,13 +24,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
 
+      .nav-list a:focus {
+        outline: none;
+      }
+
       .nav-list {
         margin-left: 64px;
         height: 64px;
+        display: flex;
+        align-items: center;
       }
 
-      .nav-list a:focus{
-        outline: none;
+      .nav-list a {
+        box-sizing: border-box;
+        align-items: center;
+        height: 100%;
+        display: flex;
+        cursor: pointer;
+        justify-content: center;
+        vertical-align: middle;
+        color: #4A4A4A;
+        font-size: 14px;
+        padding: 3px 12px 0 12px;
+        font-weight: 500;
+        text-decoration: none;
+        text-transform: uppercase;
+        border-bottom: 3px solid transparent;
+        -webkit-transition: border-bottom 150ms ease-in-out;
+        -moz-transition: border-bottom 150ms ease-in-out;
+        transition: border-bottom 150ms ease-in-out;
+      }
+
+      .nav-list a:hover{
+        border-bottom: 3px solid #BCC8FB;
+      }
+
+      .nav-list a.iron-selected {
+        border-bottom: 3px solid #536DFE;
       }
 
       .schedule {
@@ -140,7 +170,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       @media screen and (max-width: 860px) {
-        .nav-list{
+        .nav-list {
           margin-left: 24px;
         }
         .schedule .schedule_section {
@@ -157,7 +187,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           padding: 20px;
         }
         .schedule .schedule_note,
-        .schedule .schedule_loading{
+        .schedule .schedule_loading {
           padding: 24px;
         }
       }
@@ -177,102 +207,136 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <iron-pages selected="{{page}}" attr-for-selected="name">
       <section name="agenda">
         <div class="schedule">
-          <template is="dom-if" if="{{!sessions}}">
-            <div class="schedule_loading">
-              Loading event information ...
-            </div>
-          </template>
-          <template is="dom-if" if="{{sessions}}">
-            <template is="dom-repeat" items="{{sessions}}">
-              <div class="schedule_section">
-                <div class="schedule_time">{{item.time}}<span>{{item.ampm}}</span></div>
-                <div class="schedule_events">
-                  <template is="dom-repeat" items="{{item.session}}">
-                    <div class="schedule_event" on-tap="showDialog">
-                      <div class="schedule_detail">
-                        <div class="schedule_event_title">{{item.title}}</div>
-                        <div class="schedule_event_meta">
-                          <div class="schedule_event_description">{{item.duration}} / {{item.location}}</div>
-                          <template is="dom-repeat" items="{{item.tag}}">
-                            <div class="schedule_event_tag" id="{{_toLowerCase(item)}}">{{item}}</div>
-                          </template>
-                        </div>
-                      </div>
-                      <template is="dom-if" if="{{user}}">
-                        <template is="dom-if" if="{{!item.bookmarked}}">
-                          <div id="bookmark" class="schedule_bookmark add" on-tap="_bookmark">
-                            <svg id="bookmark" width="18" height="23" viewBox="324 292 18 23" xmlns="http://www.w3.org/2000/svg">
-                              <path id="bookmark" d="M339.429 292c1.414 0 2.571 1.13 2.571 2.538v20.308l-9-3.808-9 3.808v-20.308c0-1.401 1.151-2.538 2.571-2.538h12.858zM338 303v-2h-4v-4h-2v4h-4v2h4v4h2v-4h4z"
-                                fill-rule="evenodd"></path>
-                            </svg>
-                          </div>
-                        </template>
-                        <template is="dom-if" if="{{item.bookmarked}}">
-                          <div id="bookmark" class="schedule_bookmark exists" on-tap="_bookmark">
-                            <svg id="bookmark" width="18" height="24" viewBox="324 402 18 24" xmlns="http://www.w3.org/2000/svg">
-                              <path id="bookmark" d="M339.429 402a2.57 2.57 0 0 1 2.571 2.571v20.572l-9-3.857-9 3.857V404.57a2.571 2.571 0 0 1 2.571-2.571h12.858zm-8.143 13.931l7.714-7.714-1.209-1.217-6.505 6.506-3.077-3.069-1.209 1.209 4.286 4.285z"
-                                fill-rule="evenodd"></path>
-                            </svg>
-                          </div>
-                        </template>
-                      </template>
-                    </div>
-                  </template>
-                </div>
+          <dom-if if="{{!sessions}}">
+            <template>
+              <div class="schedule_loading">
+                Loading event information ...
               </div>
             </template>
-          </template>
+          </dom-if>
+          <dom-if if="{{sessions}}">
+            <template>
+              <dom-repeat items="{{sessions}}">
+                <template>
+                  <div class="schedule_section">
+                    <div class="schedule_time">{{item.time}}<span>{{item.ampm}}</span></div>
+                    <div class="schedule_events">
+                      <dom-repeat items="{{item.session}}">
+                        <template>
+                          <div class="schedule_event" on-tap="showDialog">
+                            <div class="schedule_detail">
+                              <div class="schedule_event_title">{{item.title}}</div>
+                              <div class="schedule_event_meta">
+                                <div class="schedule_event_description">{{item.duration}} / {{item.location}}</div>
+                                <dom-repeat items="{{item.tag}}">
+                                  <template>
+                                    <div class="schedule_event_tag" id="{{_toLowerCase(item)}}">{{item}}</div>
+                                  </template>
+                                </dom-repeat>
+                              </div>
+                            </div>
+                            <dom-if if="{{user}}">
+                              <template>
+                                <dom-if if="{{!item.bookmarked}}">
+                                  <template>
+                                    <div id="bookmark" class="schedule_bookmark add" on-tap="_bookmark">
+                                      <svg id="bookmark" width="18" height="23" viewBox="324 292 18 23" xmlns="http://www.w3.org/2000/svg">
+                                        <path id="bookmark" d="M339.429 292c1.414 0 2.571 1.13 2.571 2.538v20.308l-9-3.808-9 3.808v-20.308c0-1.401 1.151-2.538 2.571-2.538h12.858zM338 303v-2h-4v-4h-2v4h-4v2h4v4h2v-4h4z"
+                                          fill-rule="evenodd"></path>
+                                      </svg>
+                                    </div>
+                                  </template>
+                                </dom-if>
+                                <dom-if if="{{item.bookmarked}}">
+                                  <template>
+                                    <div id="bookmark" class="schedule_bookmark exists" on-tap="_bookmark">
+                                      <svg id="bookmark" width="18" height="24" viewBox="324 402 18 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path id="bookmark" d="M339.429 402a2.57 2.57 0 0 1 2.571 2.571v20.572l-9-3.857-9 3.857V404.57a2.571 2.571 0 0 1 2.571-2.571h12.858zm-8.143 13.931l7.714-7.714-1.209-1.217-6.505 6.506-3.077-3.069-1.209 1.209 4.286 4.285z"
+                                          fill-rule="evenodd"></path>
+                                      </svg>
+                                    </div>
+                                  </template>
+                                </dom-if>
+                              </template>
+                            </dom-if>
+                          </div>
+                        </template>
+                      </dom-repeat>
+                    </div>
+                  </div>
+                </template>
+              </dom-repeat>
+            </template>
+          </dom-if>
         </div>
       </section>
       <section name="myio">
         <div class="schedule">
-          <template is="dom-if" if="{{user}}">
-            <div class="schedule_note">
-              Your saved events appear below, and are synced from your account across mobile and desktop.
-            </div>
-          </template>
-          <template is="dom-if" if="{{!user}}">
-            <div class="schedule_note">
-              Sign in to save events to My I/O and create your custom I/O schedule.
-            </div>
-          </template>
-          <template is="dom-if" if="{{!sessions}}">
-            <div class="schedule_loading">
-              Loading event information ...
-            </div>
-          </template>
-          <template is="dom-if" if="{{sessions}}">
-            <template is="dom-repeat" items="{{sessions}}">
-              <template is="dom-if" if="{{_checkBookmarked(item)}}">
-                <div class="schedule_section">
-                  <div class="schedule_time">{{item.time}}<span>{{item.ampm}}</span></div>
-                  <div class="schedule_events">
-                    <template is="dom-repeat" items="{{item.session}}">
-                      <template is="dom-if" if="{{item.bookmarked}}">
-                        <div class="schedule_event" on-tap="showDialog">
-                          <div class="schedule_detail">
-                            <div class="schedule_event_title">{{item.title}}</div>
-                            <div class="schedule_event_meta">
-                              <div class="schedule_event_description">{{item.duration}} / {{item.location}}</div>
-                              <template is="dom-repeat" items="{{item.tag}}">
-                                <div class="schedule_event_tag" id="{{_toLowerCase(item)}}">{{item}}</div>
-                              </template>
-                            </div>
-                          </div>
-                          <div id="bookmark" class="schedule_bookmark exists" on-tap="_bookmark">
-                            <svg id="bookmark" width="18" height="24" viewBox="324 402 18 24" xmlns="http://www.w3.org/2000/svg">
-                              <path id="bookmark" d="M339.429 402a2.57 2.57 0 0 1 2.571 2.571v20.572l-9-3.857-9 3.857V404.57a2.571 2.571 0 0 1 2.571-2.571h12.858zm-8.143 13.931l7.714-7.714-1.209-1.217-6.505 6.506-3.077-3.069-1.209 1.209 4.286 4.285z"
-                                fill-rule="evenodd"></path>
-                            </svg>
-                          </div>
-                        </div>
-                      </template>
-                    </template>
-                  </div>
-                </div>
-              </template>
+          <dom-if if="{{user}}">
+            <template>
+              <div class="schedule_note">
+                Your saved events appear below, and are synced from your account across mobile and desktop.
+              </div>
             </template>
-          </template>
+          </dom-if>
+          <dom-if if="{{!user}}">
+            <template>
+              <div class="schedule_note">
+                Sign in to save events to My I/O and create your custom I/O schedule.
+              </div>
+            </template>
+          </dom-if>
+          <dom-if if="{{!sessions}}">
+            <template>
+              <div class="schedule_loading">
+                Loading event information ...
+              </div>
+            </template>
+          </dom-if>
+          <dom-if if="{{sessions}}">
+            <template>
+              <dom-repeat items="{{sessions}}">
+                <template>
+                  <dom-if if="{{_checkBookmarked(item)}}">
+                    <template>
+                      <div class="schedule_section">
+                        <div class="schedule_time">{{item.time}}<span>{{item.ampm}}</span></div>
+                        <div class="schedule_events">
+                          <dom-repeat items="{{item.session}}">
+                            <template>
+                              <dom-if if="{{item.bookmarked}}">
+                                <template>
+                                  <div class="schedule_event" on-tap="showDialog">
+                                    <div class="schedule_detail">
+                                      <div class="schedule_event_title">{{item.title}}</div>
+                                      <div class="schedule_event_meta">
+                                        <div class="schedule_event_description">{{item.duration}} / {{item.location}}</div>
+                                        <dom-repeat items="{{item.tag}}">
+                                          <template>
+                                            <div class="schedule_event_tag" id="{{_toLowerCase(item)}}">{{item}}</div>
+                                          </template>
+                                        </dom-repeat>
+                                      </div>
+                                    </div>
+                                    <div id="bookmark" class="schedule_bookmark exists" on-tap="_bookmark">
+                                      <svg id="bookmark" width="18" height="24" viewBox="324 402 18 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path id="bookmark" d="M339.429 402a2.57 2.57 0 0 1 2.571 2.571v20.572l-9-3.857-9 3.857V404.57a2.571 2.571 0 0 1 2.571-2.571h12.858zm-8.143 13.931l7.714-7.714-1.209-1.217-6.505 6.506-3.077-3.069-1.209 1.209 4.286 4.285z"
+                                          fill-rule="evenodd"></path>
+                                      </svg>
+                                    </div>
+                                  </div>
+                                </template>
+                              </dom-if>
+                            </template>
+                          </dom-repeat>
+                        </div>
+                      </div>
+                    </template>
+                  </dom-if>
+                </template>
+              </dom-repeat>
+            </template>
+          </dom-if>
         </div>
       </section>
     </iron-pages>
@@ -299,7 +363,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       _checkBookmarked(item) {
-        for (i in item.session) {
+        for (var i in item.session) {
           if (item.session[i].bookmarked) {
             return true;
           }
@@ -322,8 +386,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       _onUserChanged() {
-        var agendaRef = firebase.database().ref('agenda/');
         if (this.user) {
+          var agendaRef = firebase.database().ref('agenda/');
           var userRef = firebase.database().ref('users/' + this.user.uid);
           agendaRef.once('value').then(snapshot => {
             var agenda = snapshot.val();
@@ -342,7 +406,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             })
           })
         }
-        else {
+        if (this.user == null) {
+          var agendaRef = firebase.database().ref('agenda/');
           agendaRef.on('value', snapshot => {
             this.set('sessions', snapshot.val())
           })

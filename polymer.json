@@ -22,8 +22,18 @@
     "rules": ["polymer-2"]
   },
   "builds": [{
-    "bundle": true,
-    "js": {"minify": false, "compile": true},
+    "name": "appspot",
+    "bundle": false,
+    "js": {"minify": true, "compile": true},
+    "css": {"minify": true},
+    "html": {"minify": true},
+    "addPushManifest": true,
+    "insertPrefetchLinks": false,
+    "addServiceWorker": true
+  },{
+    "name": "firebase",
+    "bundle": false,
+    "js": {"minify": true, "compile": true},
     "css": {"minify": true},
     "html": {"minify": true},
     "addPushManifest": true,

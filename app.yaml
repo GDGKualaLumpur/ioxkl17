@@ -1,0 +1,66 @@
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+libraries:
+- name: webapp2
+  version: "2.5.2"
+
+handlers:
+
+- url: /bower_components
+  static_dir: build/appspot/bower_components
+  secure: always
+
+- url: /data
+  static_dir: build/appspot/data
+  secure: always
+
+- url: /images
+  static_dir: build/appspot/images
+  secure: always
+
+- url: /src
+  static_dir: build/appspot/src
+  secure: always
+
+- url: /service-worker.js
+  static_files: build/appspot/service-worker.js
+  upload: build/appspot/service-worker.js
+  secure: always
+  expiration: "1s"
+
+- url: /manifest.json
+  static_files: build/appspot/manifest.json
+  upload: build/appspot/manifest.json
+  secure: always  
+  
+- url: /.*
+  static_files: build/appspot/index.html
+  upload: build/appspot/index.html
+  secure: always 
+
+# - url: .*
+#   script: main.app
+#   secure: always
+
+skip_files:
+- ^(.*/)?app\.yaml
+- ^(.*/)?app\.yml
+- ^(.*/)?index\.yaml
+- ^(.*/)?index\.yml
+- ^(.*/)?bower\.json
+- ^(.*/)?#.*#
+- ^(.*/)?.*~
+- ^(.*/)?.*\.py[co]
+- ^(.*/)?.*/RCS/.*
+- ^(.*/)?\..*
+- ^(.*/)?.*\.bak$
+- ^(.*/)?node_modules/.*
+- ^.*.md|markdown
+- ^(bower_components/.*)
+- ^(.idea/.*)
+- ^(data/.*)
+- ^(functions/.*)
+- ^(images/.*)
+- ^(src/.*)

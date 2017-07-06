@@ -9,24 +9,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
-<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/polymer/lib/mixins/gesture-event-listeners.html">
 <link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
-<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-app-script.html">
-<link rel="import" href="../bower_components/polymerfire/firebase-auth-script.html">
-<link rel="import" href="io-dialog.html">
-<link rel="import" href="io-icons.html">
 <link rel="import" href="effects/resize-header.html">
-<link rel="import" href="shared-styles.html">
 
 <link rel="lazy-import" href="io-home.html">
 <link rel="lazy-import" href="io-sessions.html">
@@ -35,20 +28,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="io-app">
   <template>
-    <style include="shared-styles">
+    <style>
        :host {
         --app-primary-color: #4285f4;
         --app-secondary-color: black;
-
         display: block;
       }
 
-      app-drawer-layout:not([narrow]) [drawer-toggle] {
-        display: none;
+      app-drawer {
+        z-index: 3;
       }
 
       app-header {
         color: #424242;
+      }
+
+      app-toolbar#header {
+        background: white;
+        border-bottom: 1px solid rgb(238, 221, 238);
       }
 
       app-header paper-icon-button {
@@ -56,44 +53,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --paper-icon-button-ink-color: #424242;
       }
 
-      .drawer-list {
-        margin: 0;
-      }
-
-      .drawer-list a {
-        display: block;
-        padding: 0 16px;
-        text-decoration: none;
-        color: var(--app-secondary-color);
-        line-height: 40px;
-      }
-
-      .drawer-list a.iron-selected {
-        color: black;
-        font-weight: bold;
-      }
-
-      .drawer-list a:focus {
-        outline: none;
-      }
-
-      paper-toast span {
-        @apply(--layout-self-center);
-        padding-left: 12px;
-        color: #1CE8B5;
-        text-transform: uppercase;
-        font-weight: 500;
-        cursor: pointer;
-        white-space: nowrap;
-        user-select: none;
-      }
-
       iron-pages {
         @apply --layout-flex;
         min-height: 100vh;
       }
-
-
 
       app-toolbar img[main-title] {
         margin-left: 64px;
@@ -102,6 +65,57 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app-toolbar img[condensed-title] {
         margin-left: 24px;
         vertical-align: middle;
+      }
+
+      .nav-list:last-of-type {
+        margin-right: 24px;
+      }
+
+      .nav-list {
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+
+      .nav-list a {
+        box-sizing: border-box;
+        align-items: center;
+        height: 100%;
+        display: flex;
+        cursor: pointer;
+        justify-content: center;
+        vertical-align: middle;
+        color: #4A4A4A;
+        font-size: 14px;
+        padding: 3px 12px 0 12px;
+        font-weight: 500;
+        text-decoration: none;
+        text-transform: uppercase;
+        border-bottom: 3px solid transparent;
+        -webkit-transition: border-bottom 150ms ease-in-out;
+        -moz-transition: border-bottom 150ms ease-in-out;
+        transition: border-bottom 150ms ease-in-out;
+      }
+
+      .nav-list a:hover,
+      .nav-list.no-tab a.iron-selected:hover {
+        border-bottom: 3px solid #BCC8FB;
+      }
+
+      .nav-list a.iron-selected {
+        border-bottom: 3px solid #536DFE;
+      }
+
+      .nav-list.no-tab img {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        cursor: pointer;
+        padding: 0 14px;
+      }
+
+      .nav-list.no-tab a.iron-selected {
+        border-bottom: 3px solid transparent;
       }
 
       footer .footer_hashtag {
@@ -141,6 +155,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         pointer-events: none;
       }
 
+      .drawer-list {
+        margin: 0;
+      }
+
+      .drawer-list a {
+        display: block;
+        padding: 0 16px;
+        text-decoration: none;
+        color: var(--app-secondary-color);
+        line-height: 40px;
+      }
+
+      .drawer-list a.iron-selected {
+        color: black;
+        font-weight: bold;
+      }
+
+      .drawer-list a:focus {
+        outline: none;
+      }
+
+      paper-toast span {
+        padding: 12px;
+        color: #1CE8B5;
+        text-transform: uppercase;
+        font-weight: 500;
+        cursor: pointer;
+        white-space: nowrap;
+        user-select: none;
+        @apply(--layout-self-center);
+      }
+
       @media screen and (max-width: 860px) {
         paper-toast {
           width: 100%;
@@ -148,19 +194,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           border-radius: 0;
           margin: 0;
         }
+
         app-header paper-icon-button {
           display: flex;
         }
+
         .nav-list {
           display: none;
         }
+
         .nav-list.no-tab {
           margin-right: 0;
           display: flex;
         }
+
         app-toolbar img[main-title] {
           margin-left: 20px;
         }
+
         app-toolbar img[condensed-title] {
           margin-left: 6px;
         }
@@ -168,108 +219,125 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         footer .footer_hashtag {
           padding: 64px 20px 32px 20px;
         }
+
         footer .footer_hashtag img {
           max-width: 220px;
           width: 90%;
         }
+
         footer .footer_content {
           flex-direction: column;
           align-items: flex-start;
           padding: 50px 20px;
         }
+
         footer .footer_social {
           margin-top: 12px;
         }
+
         footer .footer_social a {
           margin-right: 6px;
         }
       }
     </style>
 
-    <paper-toast id="toast" text="A new version of this app is available." duration="3000">
-      <span on-tap="reload">Refresh Now</span>
-    </paper-toast>
-
-    <io-dialog id="dialog" opened></io-dialog>
-
     <app-location route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern="[[rootPattern]]:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+    <iron-media-query query="max-width: 860px" query-matches="{{smallScreen}}"></iron-media-query>
 
-    <app-drawer-layout force-narrow fullbleed>
-      <app-drawer id="drawer" slot="drawer" align="right" swipe-open>
-        <app-toolbar>Menu</app-toolbar>
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="home" href="home">Home</a>
-          <a name="sessions" href="sessions">Sessions</a>
-          <a name="attending" href="attending">Attending</a>
-          <a name="cod" href="cod">Code of Conduct</a>
-        </iron-selector>
-      </app-drawer>
+    <dom-if if="[[_shouldRenderDrawer]]">
+      <template>
+        <app-drawer opened="{{drawerOpened}}" tabindex="0" id="drawer" slot="drawer" align="right" swipe-open>
+          <app-toolbar>Menu</app-toolbar>
+          <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+            <a name="home" href="home">Home</a>
+            <a name="sessions" href="sessions">Sessions</a>
+            <a name="attending" href="attending">Attending</a>
+            <a name="cod" href="cod">Code of Conduct</a>
+          </iron-selector>
+        </app-drawer>
+      </template>
+    </dom-if>
 
-      <app-header-layout>
-        <app-header slot="header" fixed condenses effects="resize-header">
-          <app-toolbar style="background-color: white; border-bottom: 1px solid #ede">
-            <div>
-              <img src="../images/io.svg" condensed-title width="56.5" height="40">
-            </div>
-            <div style="flex:1"></div>
-            <iron-selector selected="[[page]]" attr-for-selected="name" class="nav-list" role="navigation">
-              <a name="home" href="home">Home</a>
-              <a name="sessions" href="sessions">Sessions</a>
-              <a name="attending" href="attending">Attending</a>
-              <a name="cod" href="cod">Code of Conduct</a>
-            </iron-selector>
-            <iron-selector class="nav-list no-tab">
-              <template is="dom-if" if="{{!user}}">
+    <app-header-layout>
+      <app-header slot="header" fixed condenses effects="resize-header">
+        <app-toolbar id="header">
+          <div>
+            <img src="../images/io.svg" condensed-title width="56.5" height="40">
+          </div>
+          <div style="flex:1"></div>
+          <iron-selector selected="[[page]]" attr-for-selected="name" class="nav-list" role="navigation">
+            <a name="home" href="home">Home</a>
+            <a name="sessions" href="sessions">Sessions</a>
+            <a name="attending" href="attending">Attending</a>
+            <a name="cod" href="cod">Code of Conduct</a>
+          </iron-selector>
+          <iron-selector class="nav-list no-tab">
+            <dom-if if="[[!user]]">
+              <template>
                 <a on-tap="signIn">Sign In</a>
               </template>
-              <template is="dom-if" if="{{user}}">
+            </dom-if>
+            <dom-if if="[[user]]">
+              <template>
                 <img src$="{{user.photoURL}}" on-tap="signIn">
               </template>
-            </iron-selector>
-            <paper-icon-button icon="io-icons:menu" drawer-toggle></paper-icon-button>
-          </app-toolbar>
-          <app-toolbar style="height: 240px; background-color: transparent; align-items: flex-end">
-            <div>
-              <img src="../images/io.svg" main-title width="188" height="133">
-            </div>
-          </app-toolbar>
-        </app-header>
-
-        <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
-          <io-home name="home"></io-home>
-          <io-sessions name="sessions" user="{{user}}"></io-sessions>
-          <io-attending name="attending"></io-attending>
-          <io-cod name="cod"></io-cod>
-        </iron-pages>
-
-        <footer>
-          <div class="footer_hashtag">
-            <img src="../images/iohashtag.svg" width="277" height="95">
+            </dom-if>
+          </iron-selector>
+          <paper-icon-button icon="io-icons:menu" on-tap="_toggleDrawer"></paper-icon-button>
+        </app-toolbar>
+        <app-toolbar style="height: 240px; background-color: transparent; align-items: flex-end">
+          <div>
+            <img src="../images/io.svg" main-title width="188" height="133">
           </div>
-          <div class="footer_content">
-            <div class="footer_logo">
-              <img src="../images/gdgkl.svg" width="630" height="138">
+        </app-toolbar>
+      </app-header>
+
+      <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
+        <io-home name="home" ticket="[[ticket]]"></io-home>
+        <io-sessions name="sessions" user="{{user}}"></io-sessions>
+        <io-attending name="attending"></io-attending>
+        <io-cod name="cod"></io-cod>
+      </iron-pages>
+
+      <dom-if if="[[_shouldRenderLazy]]">
+        <template>
+          <footer>
+            <div class="footer_hashtag">
+              <img src="../images/iohashtag.svg" width="277" height="95">
             </div>
-            <div class="footer_social">
-              <a aria-label="Facebook" href="https://www.facebook.com/GDGKualaLumpur/" target="_blank" rel="noopener">
-                <iron-icon icon="io-icons:facebook"></iron-icon>
-              </a>
-              <a aria-label="Google Plus" href="https://plus.google.com/+GdgMy" target="_blank" rel="noopener">
-                <iron-icon icon="io-icons:googleplus"></iron-icon>
-              </a>
-              <a aria-label="Twitter" href="https://twitter.com/gdgkl" target="_blank" rel="noopener">
-                <iron-icon icon="io-icons:twitter"></iron-icon>
-              </a>
+            <div class="footer_content">
+              <div class="footer_logo">
+                <img src="../images/gdgkl.svg" width="630" height="138">
+              </div>
+              <div class="footer_social">
+                <a aria-label="Facebook" href="https://www.facebook.com/GDGKualaLumpur/" target="_blank" rel="noopener">
+                  <iron-icon icon="io-icons:facebook"></iron-icon>
+                </a>
+                <a aria-label="Google Plus" href="https://plus.google.com/+GdgMy" target="_blank" rel="noopener">
+                  <iron-icon icon="io-icons:googleplus"></iron-icon>
+                </a>
+                <a aria-label="Twitter" href="https://twitter.com/gdgkl" target="_blank" rel="noopener">
+                  <iron-icon icon="io-icons:twitter"></iron-icon>
+                </a>
+              </div>
             </div>
-          </div>
-        </footer>
-      </app-header-layout>
-    </app-drawer-layout>
+          </footer>
+        </template>
+      </dom-if>
+    </app-header-layout>
+    <dom-if if="[[_shouldRenderLazy]]">
+      <template>
+        <paper-toast id="toast" text="A new version of this app is available." duration="3000">
+          <span on-tap="reload">Refresh Now</span>
+        </paper-toast>
+      </template>
+    </dom-if>
+    <io-dialog id="dialog"></io-dialog>
   </template>
 
   <script>
-    class IoApp extends Polymer.Element {
+    class IoApp extends Polymer.GestureEventListeners(Polymer.Element) {
 
       static get is() { return 'io-app'; }
 
@@ -280,11 +348,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             reflectToAttribute: true,
             observer: '_pageChanged',
           },
+          _shouldRenderDrawer: {
+            computed: '_computeShouldRenderDrawer(smallScreen, loadComplete)'
+          },
+          _shouldRenderLazy: {
+            computed: '_computedShouldRenderLazy(loadComplete)'
+          },
           rootPattern: String,
           routeData: Object,
           subroute: String,
           sessiondetail: Object,
-          user: Object
+          ticket: Object,
+          user: {
+            value: false
+          }
         };
       }
 
@@ -296,50 +373,126 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       constructor() {
         super();
-
-        // Get root pattern for app-route, for more info about `rootPath` see:
-        // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
         this.rootPattern = (new URL(this.rootPath)).pathname;
       }
 
       _routePageChanged(page) {
-        // Polymer 2.0 will call with `undefined` on initialization.
-        // Ignore until we are properly called with a string.
         if (page === undefined) {
           return;
         }
 
-        // If no page was found in the route data, page will be an empty string.
-        // Deault to 'view1' in that case.
         this.page = page || 'home';
+        this.drawerOpened = false;
+      }
 
-        // Close a non-persistent drawer when the page & route are changed.
-        if (!this.$.drawer.persistent) {
-          this.$.drawer.close();
+      _toggleDrawer() {
+        this.drawerOpened = !this.drawerOpened;
+      }
+
+      _pageChanged(page, oldPage) {
+        if (page != null) {
+          document.body.scrollTop = 0;
+          if (page == 'home') {
+            this._pageLoaded(Boolean(oldPage));
+          } else {
+            let cb = this._pageLoaded.bind(this, Boolean(oldPage));
+            Polymer.importHref(
+              this.resolveUrl('io-' + page + '.html'),
+              cb, cb, true);
+          }
         }
       }
 
-      _pageChanged(page) {
-        Polymer.AppLayout.scroll({ top: 0, behavior: 'silent' });
-        // Load page import on demand. Show 404 page if fails
-        var resolvedPageUrl = this.resolveUrl('io-' + page + '.html');
-        Polymer.importHref(
-          resolvedPageUrl,
-          null,
-          this._showPage404.bind(this),
-          true);
+      _pageLoaded(shouldResetLayout) {
+        this._ensureLazyLoaded();
       }
 
-      _onPaperDialogChanged() {
+      _computeShouldRenderDrawer(smallScreen, loadComplete) {
+        return smallScreen && loadComplete;
+      }
 
+      _computedShouldRenderLazy(loadComplete) {
+        return loadComplete;
+      }
+
+      _ensureLazyLoaded() {
+        if (!this.loadComplete) {
+          Polymer.RenderStatus.afterNextRender(this, () => {
+            Polymer.importHref(this.resolveUrl('lazy-resources.html'), () => {
+              this.loadComplete = true;
+              this._ensureLazyLoaded();
+
+              this.shadowRoot.querySelector('io-sessions').addEventListener('showdialog', e => {
+                this.shadowRoot.querySelector('#dialog').open(e)
+              });
+
+              var config = {
+                apiKey: "AIzaSyAehpQe5zbO1JkVoe3pmnCNocmxoGxmlqU",
+                authDomain: "ioxkl17.firebaseapp.com",
+                databaseURL: "https://ioxkl17.firebaseio.com",
+                projectId: "ioxkl17",
+                storageBucket: "ioxkl17.appspot.com",
+                messagingSenderId: "367508360845"
+              };
+
+              firebase.initializeApp(config);
+
+              firebase.auth().onAuthStateChanged(user => {
+                this.user = user;
+              })
+
+              firebase.database().ref('site/').once('value').then(snapshot =>{
+                this.set('ticket', snapshot.val());
+              })
+
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                  navigator.serviceWorker.register('service-worker.js').then(reg => {
+                    reg.onupdatefound = function () {
+                      var installingWorker = reg.installing;
+                      installingWorker.onstatechange = () => {
+                        switch (installingWorker.state) {
+                          case 'installed':
+                            if (navigator.serviceWorker.controller) {
+                              this.$.toast.toggle();
+                            }
+                            else {
+                              console.log('Content is now available offline!');
+                            }
+                            break;
+                          case 'redundant':
+                            console.error('The installing service worker became redundant.');
+                            break;
+                        }
+                      }
+                    }
+                  }).catch(e => {
+                    console.error('Error during service worker registration:', e);
+                  })
+                });
+              }
+            });
+          });
+        }
+        else {
+          this.shadowRoot.querySelector('#dialog').addEventListener('dialogchanged', e => {
+            if (e.detail) {
+              this.shadowRoot.querySelector('app-header').toggleScrollListener(false);
+              this.scrollPos = document.body.scrollTop;
+              document.body.style.overflowY = 'hidden'
+              document.body.scrollTop = this.scrollPos;
+            }
+            else {
+              this.shadowRoot.querySelector('app-header').toggleScrollListener(true);
+              document.body.style.overflow = 'initial';
+              Polymer.AppLayout.scroll({ top: this.scrollPos, behavior: 'silent' });
+            }
+          })
+        }
       }
 
       _showPage404() {
         this.page = 'home';
-      }
-
-      _toggleToast() {
-        this.$.toast.toggle();
       }
 
       reload() {
@@ -352,39 +505,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready() {
         super.ready();
-
-        var config = {
-          apiKey: "AIzaSyAehpQe5zbO1JkVoe3pmnCNocmxoGxmlqU",
-          authDomain: "ioxkl17.firebaseapp.com",
-          databaseURL: "https://ioxkl17.firebaseio.com",
-          projectId: "ioxkl17",
-          storageBucket: "ioxkl17.appspot.com",
-          messagingSenderId: "367508360845"
-        };
-
-        firebase.initializeApp(config);
-
-        firebase.auth().onAuthStateChanged(user => {
-          this.user = user;
-        })
-
-        this.shadowRoot.querySelector('io-sessions').addEventListener('showdialog', e => {
-          this.$.dialog.open(e)
-        });
-
-        this.shadowRoot.querySelector('io-dialog').addEventListener('dialogchanged', e => {
-          if (e.detail) {
-            this.shadowRoot.querySelector('app-header').toggleScrollListener(false);
-            this.scrollPos = document.documentElement.scrollTop;
-            this.shadowRoot.querySelector('app-drawer-layout').style.overflowY = 'hidden'
-            this.shadowRoot.querySelector('app-drawer-layout').scrollTop = this.scrollPos;
-          }
-          else {
-            this.shadowRoot.querySelector('app-header').toggleScrollListener(true);
-            this.shadowRoot.querySelector('app-drawer-layout').style.overflow = 'initial';
-            Polymer.AppLayout.scroll({ top: this.scrollPos, behavior: 'silent' });
-          }
-        })
+        this.removeAttribute('unresolved');
       }
     }
 

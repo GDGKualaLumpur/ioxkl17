@@ -169,3 +169,7 @@ cert.pem
 key.pem
 
 perf.txt
+caddyfile
+caddyfile.save
+http2push.pyc
+main.pyc

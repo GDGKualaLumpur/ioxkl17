@@ -10,11 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/polymer/lib/mixins/gesture-event-listeners.html">
-<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
-<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="shared-styles.html">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Product+Sans:400,500" crossorigin="anonymous">
 <dom-module id="io-home">
   <template>
     <style include="shared-styles">
@@ -35,6 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .hero .hero_description {
+        margin: 12px 6px 48px 0;
         margin-bottom: 62px;
       }
 
@@ -62,7 +59,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 250px;
         padding: 30px;
         color: #424242;
-        box-shadow: 0 4px 4px 0 rgba(0,0,0,0.24), 0 0 4px 0 rgba(0,0,0,0.14)
+        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.14)
       }
 
       .hero_card .hero_card_title {
@@ -81,10 +78,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding: 6px 25px;
         border-radius: 2px;
         cursor: pointer;
+        text-decoration: none;
+        color: #424242;
       }
 
       .featured_videos {
-
         background-color: #FAFAFA;
         padding: 60px 20px;
       }
@@ -279,31 +277,57 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="hero_home">
         <div class="hero_title">Google I/O Extended 2017 brings out the best Google technologies all the way from Mountain View to Kuala Lumpur.</div>
         <div class="hero_description">
-          <div class="hero_date">July 2017</div>
+          <div class="hero_date">22 July 2017</div>
           <div class="hero_location">Google Malaysia, Kuala Lumpur</div>
         </div>
       </div>
-      <div class="hero_card">
-        <div class="hero_card_title">Registration Opens Soon</div>
-        <div class="hero_card_description">Check back soon for more details.</div>
-        <div class="hero_card_button">COMING SOON</div>
-      </div>
+      <dom-if if="{{ticket.ticket_open}}">
+        <template>
+          <div class="hero_card">
+            <dom-if if="{{ticket.ticket_sold_out}}">
+              <template>
+                <div class="hero_card_title">Registration is now closed</div>
+                <div class="hero_card_description">Tickets are sold out.</div>
+                <a href="{{ticket.ticket_url}}" target="_blank" rel="noopener" class="hero_card_button">SOLD OUT</a>
+              </template>
+            </dom-if>
+            <dom-if if="{{!ticket.ticket_sold_out}}">
+              <template>
+                <div class="hero_card_title">Registration is now open</div>
+                <div class="hero_card_description">Get your ticket now at Peatix!</div>
+                <a href="{{ticket.ticket_url}}" target="_blank" rel="noopener" class="hero_card_button">REGISTER</a>
+              </template>
+            </dom-if>
+          </div>
+        </template>
+      </dom-if>
+      <dom-if if="{{!ticket.ticket_open}}">
+        <template>
+          <div class="hero_card">
+            <div class="hero_card_title">Registration Opens Soon</div>
+            <div class="hero_card_description">Check back soon for more details.</div>
+            <div class="hero_card_button">COMING SOON</div>
+          </div>
+        </template>
+      </dom-if>
     </div>
 
     <div class="featured_videos">
       <div class="featured_videos_title">I/O'17 featured videos</div>
       <div class="featured_videos_content">
-        <template is="dom-repeat" items="{{home.featuredvideo}}">
-          <div class="featured_videos_item">
-            <a class="featured_videos_preview" href$="{{item.url}}" target="_blank" rel="noopener">
-              <div class="featured_videos_play">
-                <iron-icon icon="io-icons:play"></iron-icon>
-              </div>
-              <iron-image preload fade src$="{{item.image}}" placeholder="{{item.placeholder}}" sizing="contain"></iron-image>
-            </a>
-            <div class="featured_videos_video_title">{{item.title}}</div>
-          </div>
-        </template>
+        <dom-repeat items="{{home.featuredvideo}}">
+          <template>
+            <div class="featured_videos_item">
+              <a class="featured_videos_preview" href$="{{item.url}}" target="_blank" rel="noopener">
+                <div class="featured_videos_play">
+                  <iron-icon icon="io-icons:play"></iron-icon>
+                </div>
+                <iron-image preload fade src$="{{item.image}}" placeholder="{{item.placeholder}}" sizing="contain"></iron-image>
+              </a>
+              <div class="featured_videos_video_title">{{item.title}}</div>
+            </div>
+          </template>
+        </dom-repeat>
       </div>
     </div>
 
@@ -315,9 +339,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </aside>
       <div class="featured_images_content">
         <div class="featured_images_belt" id="featured_images_belt">
-          <template is="dom-repeat" items="{{home.highlightimage}}">
-            <iron-image placeholder="{{item.placeholder}}" src$="{{item.image}}" preload fade sizing="cover"></iron-image>
-          </template>
+          <dom-repeat items="{{home.highlightimage}}">
+            <template>
+              <iron-image placeholder="{{item.placeholder}}" src$="{{item.image}}" preload fade sizing="cover"></iron-image>
+            </template>
+          </dom-repeat>
         </div>
       </div>
     </div>
@@ -327,6 +353,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     class IoHome extends Polymer.GestureEventListeners(Polymer.Element) {
       static get is() { return 'io-home'; }
+
+      static get properties() {
+        return {
+          ticket: {
+            notify: true,
+            observer: 'heye'
+          }
+        }
+      }
+
+      heye() {
+        console.log(this.ticket.ticket_open)
+        console.log(this.ticket.ticket_sold_out)
+        console.log(this.ticket.ticket_url)
+      }
 
       ready() {
         super.ready();
