@@ -25,6 +25,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="io-sessions.html">
 <link rel="lazy-import" href="io-attending.html">
 <link rel="lazy-import" href="io-cod.html">
+<link rel="lazy-import" href="../bower_components/polymerfire/firebase-auth-script.html">
+<link rel="lazy-import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="lazy-import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="lazy-import" href="../bower_components/paper-toast/paper-toast.html">
+<link rel="lazy-import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="lazy-import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="lazy-import" href="../bower_components/iron-image/iron-image.html">
+<link rel="lazy-import" href="../bower_components/iron-iconset-svg/iron-iconset-svg.html">
+<link rel="lazy-import" href="../bower_components/polymerfire/firebase-database-script.html">
 
 <dom-module id="io-app">
   <template>
@@ -441,35 +450,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 this.user = user;
               })
 
-              firebase.database().ref('site/').once('value').then(snapshot =>{
+              firebase.database().ref('site/').once('value').then(snapshot => {
                 this.set('ticket', snapshot.val());
               })
 
               if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => {
-                  navigator.serviceWorker.register('service-worker.js').then(reg => {
-                    reg.onupdatefound = function () {
-                      var installingWorker = reg.installing;
-                      installingWorker.onstatechange = () => {
-                        switch (installingWorker.state) {
-                          case 'installed':
-                            if (navigator.serviceWorker.controller) {
-                              this.$.toast.toggle();
-                            }
-                            else {
-                              console.log('Content is now available offline!');
-                            }
-                            break;
-                          case 'redundant':
-                            console.error('The installing service worker became redundant.');
-                            break;
-                        }
+                navigator.serviceWorker.register('service-worker.js').then(reg => {
+                  reg.onupdatefound = function () {
+                    var installingWorker = reg.installing;
+                    installingWorker.onstatechange = () => {
+                      switch (installingWorker.state) {
+                        case 'installed':
+                          if (navigator.serviceWorker.controller) {
+                            this.$.toast.toggle();
+                          }
+                          else {
+                            console.log('Content is now available offline!');
+                          }
+                          break;
+                        case 'redundant':
+                          console.error('The installing service worker became redundant.');
+                          break;
                       }
                     }
-                  }).catch(e => {
-                    console.error('Error during service worker registration:', e);
-                  })
-                });
+                  }
+                }).catch(e => {
+                  console.error('Error during service worker registration:', e);
+                })
               }
             });
           });

@@ -357,16 +357,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get properties() {
         return {
           ticket: {
-            notify: true,
-            observer: 'heye'
+            notify: true
           }
         }
-      }
-
-      heye() {
-        console.log(this.ticket.ticket_open)
-        console.log(this.ticket.ticket_sold_out)
-        console.log(this.ticket.ticket_url)
       }
 
       ready() {
