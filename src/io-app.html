@@ -338,13 +338,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </template>
       </dom-if>
     </app-header-layout>
-    <dom-if if="[[_shouldRenderLazy]]">
-      <template>
-        <paper-toast id="toast" text="A new version of this app is available." duration="3000">
-          <span on-tap="reload">Refresh Now</span>
-        </paper-toast>
-      </template>
-    </dom-if>
+    <paper-toast id="toast" text="A new version of this app is available." duration="3000">
+      <span on-tap="reload">Refresh Now</span>
+    </paper-toast>
     <io-dialog id="dialog"></io-dialog>
   </template>
 
