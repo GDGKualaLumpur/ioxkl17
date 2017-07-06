@@ -25,6 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="io-sessions.html">
 <link rel="lazy-import" href="io-attending.html">
 <link rel="lazy-import" href="io-cod.html">
+<link rel="lazy-import" href="io-analytics.html">
 <link rel="lazy-import" href="../bower_components/polymerfire/firebase-auth-script.html">
 <link rel="lazy-import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="lazy-import" href="../bower_components/paper-icon-button/paper-icon-button.html">
@@ -249,6 +250,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
     </style>
+
+    <io-analytics key="UA-76843776-4"></io-analytics>
 
     <app-location route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern="[[rootPattern]]:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
