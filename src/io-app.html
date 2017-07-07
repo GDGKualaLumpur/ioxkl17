@@ -443,7 +443,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 messagingSenderId: "367508360845"
               };
 
-              firebase.initializeApp(config);
+              if (!firebase.apps.length) {
+                firebase.initializeApp(config);
+              }
 
               firebase.auth().onAuthStateChanged(user => {
                 this.user = user;

@@ -18,5 +18,7 @@ module.exports = {
     '/src/**/*',
     '/images/**/*',
     '/data/**/*'
-  ]
+  ],
+  navigateFallback: '/index.html',
+  navigateFallbackWhitelist: [/^(?!\/__)/] 
 };
