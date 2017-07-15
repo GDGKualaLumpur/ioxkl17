@@ -387,7 +387,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _onUserChanged() {
         if (this.user) {
-          var agendaRef = firebase.database().ref('agenda/');
+          var agendaRef = firebase.database().ref('agenda_new/');
           var userRef = firebase.database().ref('users/' + this.user.uid);
           agendaRef.once('value').then(snapshot => {
             var agenda = snapshot.val();
@@ -407,7 +407,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           })
         }
         if (this.user == null) {
-          var agendaRef = firebase.database().ref('agenda/');
+          var agendaRef = firebase.database().ref('agenda_new/');
           agendaRef.on('value', snapshot => {
             this.set('sessions', snapshot.val())
           })
