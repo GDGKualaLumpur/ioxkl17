@@ -40,6 +40,10 @@ handlers:
   script: main.app
   secure: always
 
+- url: /io17extended.*
+  script: main.app
+  secure: always
+
 - url: /
   static_files: build/ioxkl17/index.html
   upload: build/ioxkl17/index.html
