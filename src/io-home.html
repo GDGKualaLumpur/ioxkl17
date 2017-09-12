@@ -83,7 +83,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .featured_videos {
-        background-color: #FAFAFA;
+        background: #fafafa;
         padding: 60px 20px;
       }
 
@@ -111,7 +111,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         box-sizing: border-box;
         margin-bottom: 28px;
       }
-
 
       .featured_videos .featured_videos_preview {
         display: block;
@@ -197,6 +196,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size: 15px;
       }
 
+      .featured_images_card_link{
+        margin-top: 20px;
+        text-decoration: none;
+        color: black;
+        font-weight: 500;
+      }
+
       .featured_images_belt iron-image {
         height: 600px;
         width: 900px;
@@ -271,45 +277,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <iron-ajax auto url="../data/home.json" handle-as="json" last-response="{{home}}"></iron-ajax>
+    <iron-ajax auto url="[[rootPath]]data/home.json" handle-as="json" last-response="{{home}}"></iron-ajax>
 
     <div class="hero">
       <div class="hero_home">
-        <div class="hero_title">Google I/O Extended 2017 brings out the best Google technologies all the way from Mountain View to Kuala Lumpur.</div>
+        <div class="hero_title">Google I/O Extended 2017 brings out the best Google technologies all the way from Mountain View to Kuala Lumpur. See you next year!</div>
         <div class="hero_description">
           <div class="hero_date">22 July 2017</div>
           <div class="hero_location">Google Malaysia, Kuala Lumpur</div>
         </div>
       </div>
-      <dom-if if="{{ticket.ticket_open}}">
-        <template>
-          <div class="hero_card">
-            <dom-if if="{{ticket.ticket_sold_out}}">
-              <template>
-                <div class="hero_card_title">Registration is now closed</div>
-                <div class="hero_card_description">Tickets are sold out.</div>
-                <a href="{{ticket.ticket_url}}" target="_blank" rel="noopener" class="hero_card_button">SOLD OUT</a>
-              </template>
-            </dom-if>
-            <dom-if if="{{!ticket.ticket_sold_out}}">
-              <template>
-                <div class="hero_card_title">Registration is now open</div>
-                <div class="hero_card_description">Get your ticket now at Peatix!</div>
-                <a href="{{ticket.ticket_url}}" target="_blank" rel="noopener" class="hero_card_button">REGISTER</a>
-              </template>
-            </dom-if>
-          </div>
-        </template>
-      </dom-if>
-      <dom-if if="{{!ticket.ticket_open}}">
-        <template>
-          <div class="hero_card">
-            <div class="hero_card_title">Registration Opens Soon</div>
-            <div class="hero_card_description">Check back soon for more details.</div>
-            <div class="hero_card_button">COMING SOON</div>
-          </div>
-        </template>
-      </dom-if>
     </div>
 
     <div class="featured_videos">
@@ -322,7 +299,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <div class="featured_videos_play">
                   <iron-icon icon="io-icons:play"></iron-icon>
                 </div>
-                <iron-image preload fade src$="{{item.image}}" placeholder="{{item.placeholder}}" sizing="contain"></iron-image>
+                <iron-image preload fade src$="[[rootPath]]{{item.image}}" placeholder="{{item.placeholder}}" sizing="contain"></iron-image>
               </a>
               <div class="featured_videos_video_title">{{item.title}}</div>
             </div>
@@ -333,15 +310,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <div class="featured_images">
       <aside class="featured_images_card">
-        <div class="featured_images_card_title">Memorable moments from I/O Extended 2016 Kuala Lumpur</div>
-        <div class="featured_images_card_description">During the event, you’ll dive into hands-on learning experiences, listen to technical talks, and get a chance to
-          hear more about Google’s latest developer products. Drag photos to explore.</div>
+        <div class="featured_images_card_title">Memorable moments from I/O Extended 2017 Kuala Lumpur</div>
+        <div class="featured_images_card_description">This year's event built lots of excitement. Check out photos from talks and workshops. Drag photos to explore.</div>
+        <a href="https://goo.gl/photos/hWdahdJokd7ELsm76" class="featured_images_card_link" target="_blank">SEE ALL PHOTOS</a>
       </aside>
       <div class="featured_images_content">
         <div class="featured_images_belt" id="featured_images_belt">
           <dom-repeat items="{{home.highlightimage}}">
             <template>
-              <iron-image placeholder="{{item.placeholder}}" src$="{{item.image}}" preload fade sizing="cover"></iron-image>
+              <iron-image placeholder="{{item.placeholder}}" src$="[[rootPath]]{{item.image}}" preload fade sizing="cover"></iron-image>
             </template>
           </dom-repeat>
         </div>

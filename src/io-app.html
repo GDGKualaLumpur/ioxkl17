@@ -254,7 +254,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <io-analytics key="UA-76843776-4"></io-analytics>
 
     <app-location route="{{route}}"></app-location>
-    <app-route route="{{route}}" pattern="[[rootPattern]]:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+    <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
     <iron-media-query query="max-width: 860px" query-matches="{{smallScreen}}"></iron-media-query>
 
     <dom-if if="[[_shouldRenderDrawer]]">
@@ -262,10 +262,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-drawer opened="{{drawerOpened}}" tabindex="0" id="drawer" slot="drawer" align="right" swipe-open>
           <app-toolbar>Menu</app-toolbar>
           <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-            <a name="home" href="home">Home</a>
-            <a name="sessions" href="sessions">Sessions</a>
-            <a name="attending" href="attending">Attending</a>
-            <a name="cod" href="cod">Code of Conduct</a>
+            <a name="home" href="[[rootPath]]home">Home</a>
+            <a name="sessions" href="[[rootPath]]sessions">Sessions</a>
+            <!-- <a name="attending" href="attending">Attending</a> -->
+            <a name="cod" href="[[rootPath]]cod">Code of Conduct</a>
           </iron-selector>
         </app-drawer>
       </template>
@@ -275,14 +275,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <app-header slot="header" fixed condenses effects="resize-header">
         <app-toolbar id="header">
           <div>
-            <img src="../images/io.svg" condensed-title width="56.5" height="40">
+            <img src="[[rootPath]]images/io.svg" condensed-title width="56.5" height="40">
           </div>
           <div style="flex:1"></div>
           <iron-selector selected="[[page]]" attr-for-selected="name" class="nav-list" role="navigation">
-            <a name="home" href="home">Home</a>
-            <a name="sessions" href="sessions">Sessions</a>
-            <a name="attending" href="attending">Attending</a>
-            <a name="cod" href="cod">Code of Conduct</a>
+            <a name="home" href="[[rootPath]]home">Home</a>
+            <a name="sessions" href="[[rootPath]]sessions">Sessions</a>
+            <!-- <a name="attending" href="attending">Attending</a> -->
+            <a name="cod" href="[[rootPath]]cod">Code of Conduct</a>
           </iron-selector>
           <iron-selector class="nav-list no-tab">
             <dom-if if="[[!user]]">
@@ -300,7 +300,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </app-toolbar>
         <app-toolbar style="height: 240px; background-color: transparent; align-items: flex-end">
           <div>
-            <img src="../images/io.svg" main-title width="188" height="133">
+            <img src="[[rootPath]]images/io.svg" main-title width="188" height="133">
           </div>
         </app-toolbar>
       </app-header>
@@ -316,11 +316,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <template>
           <footer>
             <div class="footer_hashtag">
-              <img src="../images/iohashtag.svg" width="277" height="95">
+              <img src="[[rootPath]]images/iohashtag.svg" width="277" height="95">
             </div>
             <div class="footer_content">
               <div class="footer_logo">
-                <img src="../images/gdgkl.svg" width="630" height="138">
+                <img src="[[rootPath]]images/gdgkl.svg" width="630" height="138">
               </div>
               <div class="footer_social">
                 <a aria-label="Facebook" href="https://www.facebook.com/GDGKualaLumpur/" target="_blank" rel="noopener">
@@ -377,11 +377,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return [
           '_routePageChanged(routeData.page)',
         ];
-      }
-
-      constructor() {
-        super();
-        this.rootPattern = (new URL(this.rootPath)).pathname;
       }
 
       _routePageChanged(page) {

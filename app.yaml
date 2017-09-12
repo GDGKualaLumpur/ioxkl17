@@ -40,10 +40,6 @@ handlers:
   upload: build/appspot/index.html
   secure: always 
 
-# - url: .*
-#   script: main.app
-#   secure: always
-
 skip_files:
 - ^(.*/)?app\.yaml
 - ^(.*/)?app\.yml

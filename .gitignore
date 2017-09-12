@@ -173,3 +173,5 @@ caddyfile
 caddyfile.save
 http2push.pyc
 main.pyc
+
+**/.DS_Store

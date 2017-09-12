@@ -195,8 +195,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <div class="hero">
       <div class="hero_big_title">Sessions</div>
-      <div class="hero_description">Learn Google's latest developer products from Googlers, Google Developer Experts and more. The schedule will be updated
-        regularly until the event, make sure to check back often.</div>
+      <div class="hero_description">Learn Google's latest developer products from Googlers, Google Developer Experts and more.</div>
     </div>
 
     <iron-selector selected="{{page}}" attr-for-selected="name" class="nav-list">
@@ -206,7 +205,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <iron-pages selected="{{page}}" attr-for-selected="name">
       <section name="agenda">
-        <div class="schedule">
+        <div class="schedule" id="schedule">
           <dom-if if="{{!sessions}}">
             <template>
               <div class="schedule_loading">

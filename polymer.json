@@ -22,13 +22,14 @@
     "rules": ["polymer-2"]
   },
   "builds": [{
-    "name": "firebase",
+    "name": "ioxkl17",
     "bundle": false,
-    "js": {"minify": false, "compile": false},
+    "js": {"minify": false, "compile": true},
     "css": {"minify": true},
     "html": {"minify": true},
     "addPushManifest": true,
     "insertPrefetchLinks": true,
-    "addServiceWorker": true
+    "addServiceWorker": true,
+    "basePath": true
   }]
 }
